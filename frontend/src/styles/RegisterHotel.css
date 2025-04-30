@@ -4,7 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5eee1; /* Fondo beige claro */
+
+    background-image: linear-gradient(45deg, #f2f55a83, #ffcc9988);
+
     padding: 20px;
   }
   

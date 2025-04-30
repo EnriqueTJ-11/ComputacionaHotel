@@ -14,7 +14,6 @@ function NavbarNoAuth() {
     >
       <Link to="/" className="logo-link">
         <div className="logo">
-          <span className="logo-icon">🏨</span>
           <span className="logo-text">Plataforma de Hospedaje</span>
         </div>
       </Link>
@@ -22,26 +21,22 @@ function NavbarNoAuth() {
       <ul className="nav-links">
         <li>
           <Link to="/buscar">
-            <span className="nav-icon">🔍</span>
             <span className="nav-text">Buscar Hoteles</span>
           </Link>
         </li>
         <li >
           <Link to="/acerca-de">
-            <span className="nav-icon">ℹ️</span>
             <span className="nav-text">Acerca de</span>
           </Link>
         </li>
         <li className={location.pathname === '/register' ? 'blinking-login' : ''}>
           <Link to="/register">
-            <span className="nav-icon">🏨</span>
             <span className="nav-text">Registrar Hotel</span>
           </Link>
           
         </li>
         <li className={location.pathname === '/inicioSesion' ? 'blinking-login' : ''}>
           <Link to="/inicioSesion">
-            <span className="nav-icon">👤</span>
             <span className="nav-text">Iniciar Sesión</span>
           </Link>
         </li>
