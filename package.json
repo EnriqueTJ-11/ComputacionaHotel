@@ -1,0 +1,26 @@
+{
+  "name": "computacionahotel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnriqueTJ-11/ComputacionaHotel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EnriqueTJ-11/ComputacionaHotel/issues"
+  },
+  "homepage": "https://github.com/EnriqueTJ-11/ComputacionaHotel#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "react-scripts": "^5.0.1",
+    "sparql-client-2": "^0.6.3"
+  }
+}
