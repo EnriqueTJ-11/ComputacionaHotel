@@ -5,7 +5,7 @@ import HotelSearch from '../components/HotelSearch';
 
 function Inicio() {
   return (
-    <div>
+    <div >
       <HotelSearch />
     </div>
   );
