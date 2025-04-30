@@ -4,7 +4,7 @@ import LoginPage from '../components/LoginPage';
 
 function Inicio() {
   return (
-    <div className="inicio-container">
+    <div className="ingreso-page">
       <LoginPage /> 
       
     </div>

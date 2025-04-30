@@ -1,0 +1,382 @@
+/* HotelSearch.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-accent: 'Poppins', sans-serif;
+}
+
+.container-general{
+  background-image: linear-gradient(45deg, #f2f55a83, #ffcc9988);
+}
+
+.search-container {
+  position: relative;
+  width: 90%; /* Ancho del 80% como solicitado */
+  height: 300px;
+  margin: 0 auto 0; /* 30px de margen superior y centrado */
+  background-image: linear-gradient(45deg, #f2f55a83, #ffcc9988);
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px; /* Bordes redondeados */
+}
+
+.banner-content {
+  position: absolute;
+  top: 0;   
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.search-title {
+  margin: 65px auto 0;
+  font-family: var(--font-heading  );
+  font-size: 2.5rem;
+  color: #020103;
+  text-align: center;
+}
+
+.search-bar-wrapper {
+  position: absolute;
+  bottom: 90px;
+  left: 0;
+  right: 0;
+  width: 85%;
+  max-width: 1000px;
+  margin: 0 auto;
+  z-index: 10;
+  /* Aseguramos que la barra de búsqueda no tenga overflow hidden */
+  overflow: visible;
+}
+
+.search-bar {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.521);
+}
+
+.search-input-group {
+  position: relative;
+  flex: 1;
+  margin-right: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.date-group, .guests-group {
+  position: relative;
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+/* Iconos personalizados usando pseudo-elementos para simular SVG */
+.location-icon::before {
+  content: '📍';
+  font-size: 16px;
+}
+
+.calendar-icon::before {
+  content: '📅';
+  font-size: 16px;
+}
+
+.guests-icon::before {
+  content: '👤';
+  font-size: 16px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.input-label {
+  position: absolute;
+  top: 4px;
+  left: 38px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.date-input, .guests-input {
+  padding-top: 10px;
+}
+
+.search-button {
+  background-color: #e2b931;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  height: 50px;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover {
+  background-color: #b48d0e;
+}
+
+/* Estilos para el selector de fechas */
+.date-picker-modal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000; /* Z-index elevado para asegurar que esté por encima de todo */
+  margin-top: 10px;
+}
+
+.date-picker-header {
+  margin-bottom: 15px;
+}
+
+.date-picker-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.date-picker-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.date-input-container {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.date-input-container:last-child {
+  margin-right: 0;
+}
+
+.date-input-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #666;
+}
+
+.date-input-container input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.date-picker-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.date-picker-apply {
+  background-color: #cea419;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Estilos para el selector de huéspedes */
+.guest-picker-modal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 350px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  z-index: 1000; /* Z-index elevado para asegurar que esté por encima de todo */
+  margin-top: 10px;
+}
+
+.room-selection {
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.room-selection h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.guest-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-body);
+  margin-bottom: 12px;
+}
+
+.child-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.child-age {
+  font-size: 12px;
+  color: #666;
+}
+
+.guest-count-control {
+  display: flex;
+  align-items: center;
+}
+
+.guest-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.guest-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.guest-count {
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.remove-room-button {
+  color: #cea419;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 12px;
+  text-align: center;
+  width: 100%;
+}
+
+.add-room-button {
+  color: #cea419;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.rooms-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.rooms-question p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+.ready-button {
+    background-color: #cea419;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100px; /* Establece el ancho a 200px */
+    display: block; /* Convierte el botón en un elemento de bloque para que ocupe todo el ancho disponible */
+    margin: 20px auto 0; /* Centra horizontalmente (auto a la izquierda y derecha) y añade margen superior si es necesario */
+  }
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .search-container {
+    width: 100%; /* En móvil, ocupar el ancho completo */
+  }
+  
+  .search-bar {
+    flex-direction: column;
+  }
+  
+  .search-input-group {
+    margin-right: 0;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+  
+  .search-button {
+    width: 100%;
+    height: 45px;
+  }
+  
+  .search-title {
+    font-size: 2.2rem;
+    margin-bottom: 60px;
+  }
+  
+  .date-picker-modal,
+  .guest-picker-modal {
+    width: calc(100vw - 40px);
+    left: -10px;
+    right: -10px;
+  }
+  
+  .date-picker-inputs {
+    flex-direction: column;
+  }
+  
+  .date-input-container {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

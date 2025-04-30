@@ -1,11 +1,16 @@
-/* src/styles/Navbar.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-accent: 'Poppins', sans-serif;
+}
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(165deg,#8f785c, #e4c283, #a6937c);
   color: white;
   padding: 0.75rem 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -41,8 +46,9 @@
 }
 
 .logo-text {
-  color: white;
+  color: #8f785c;
   letter-spacing: 0.5px;
+  font-family: var(--font-body);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -61,11 +67,12 @@
 .nav-links li a {
   display: flex;
   align-items: center;
-  color: white;
+  color: #8f785c;
   text-decoration: none;
   padding: 0.65rem 1.25rem;
   border-radius: 6px;
   transition: all 0.3s ease;
+  font-family: var(--font-body);
   font-weight: 500;
   letter-spacing: 0.3px;
 }
