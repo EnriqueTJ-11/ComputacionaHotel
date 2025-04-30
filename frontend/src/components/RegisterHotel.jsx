@@ -163,7 +163,7 @@ const RegisterHotel = () => {
             <div className="form-actions">
               <button type="submit" className="register-button">REGISTRAR HOTEL</button>
               <p className="login-link">
-                ¿Ya tienes una cuenta? <Link to="/">Inicia sesión</Link>
+                ¿Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión</Link>
               </p>
             </div>
           </form>

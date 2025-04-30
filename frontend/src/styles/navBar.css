@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, rgba(255,170,170,1) 0%, rgba(170,140,200,1) 50%, rgba(120,140,220,1) 100%);
+  background: linear-gradient(165deg,#8f785c, #e4c283, #a6937c);
   color: white;
   padding: 0.75rem 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -172,4 +172,19 @@
 
 .nav-links li.active a {
   animation: pulse 2s infinite;
+}
+
+@keyframes blink-login {
+  0% { background-color: #e0c7a7; }
+  50% { background-color: #c0a98d; } /* Un tono ligeramente diferente */
+  100% { background-color: #a6937c; }
+}
+
+.nav-links li.blinking-login a {
+  animation: blink-login 2s infinite alternate;
+  color: rgb(255, 255, 255);
+}
+
+.nav-links li.blinking-login::after {
+  display: none; /* Opcional: Ocultar el indicador inferior */
 }
