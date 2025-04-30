@@ -1,6 +1,8 @@
+import InicioSesion from './pages/inicioSesion';
+import NavbarNoAuth from './components/NavbarNoAuth';
 import Inicio from './pages/inicio';
 import Register from './pages/Register';
-import Navbar from './components/navBar';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -18,9 +20,11 @@ function App() {
 
   return (
     <Router>
+      <NavbarNoAuth />
       <div className="App">
         <Routes>
           <Route path="/" element={<Inicio />} /> 
+          <Route path="/inicioSesion" element={<InicioSesion />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       </div>
