@@ -2,6 +2,7 @@ import InicioSesion from './pages/inicioSesion';
 import NavbarNoAuth from './components/NavbarNoAuth';
 import Inicio from './pages/inicio';
 import Register from './pages/Register';
+import TraerHoteles from './pages/TraerHoteles';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +10,7 @@ import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
-    axios.get('http://localhost:8000/variables/')
+    axios.get('http://localhost:3000/query-ontologia')
       .then(response => {
         console.log('Respuesta del backend:', response.data);
       })
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Inicio />} /> 
           <Route path="/inicioSesion" element={<InicioSesion />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/buscar" element={<TraerHoteles />} />
         </Routes>
       </div>
     </Router>
