@@ -1,10 +1,11 @@
 import InicioSesion from './pages/inicioSesion';
 import NavbarNoAuth from './components/NavbarNoAuth';
+import NavbarAuth from './components/navBar';
 import Inicio from './pages/inicio';
 import Register from './pages/Register';
 import TraerHoteles from './pages/TraerHoteles';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
 
@@ -19,18 +20,18 @@ function App() {
       });
   }, []);
 
+  const location = useLocation();
+
   return (
-    <Router>
-      <NavbarNoAuth />
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<InicioSesion />} /> 
-          <Route path="/inicio" element={<Inicio />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/buscar" element={<TraerHoteles />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      {location.pathname !== '/inicio' ? <NavbarNoAuth /> : <NavbarAuth />}
+      <Routes>
+        <Route path="/" element={<InicioSesion />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/buscar" element={<TraerHoteles />} />
+        <Route path="/inicio" element={<Inicio />} />
+      </Routes>
+    </div>
   );
 }
 

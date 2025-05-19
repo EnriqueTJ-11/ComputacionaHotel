@@ -8,10 +8,10 @@ function Navbar() {
   
   // Lista de enlaces para la navegación
   const navItems = [
-    { path: '/reservas', label: 'Reservas', icon: '📅' },
-    { path: '/habitaciones', label: 'Habitaciones', icon: '🛏️' },
-    { path: '/servicios', label: 'Servicios', icon: '🍽️' },
-    { path: '/perfil', label: 'Mi Perfil', icon: '👤' }
+    { path: '/hospedaje', label: 'Buscar Hospedaje', icon: '🛏️' },
+    { path: '/perfil', label: 'Mi Perfil', icon: '👤' },
+    { path: '/registerHotel', label: 'Registrar Hospedaje', icon: '+' },
+    { path: '/', label: 'Cerrar Sesión', icon: '🔗' }
   ];
 
   return (
@@ -21,9 +21,8 @@ function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <Link to="/" className="logo-link">
+      <Link to="/inicio" className="logo-link">
         <div className="logo">
-          <span className="logo-icon">🏨</span>
           <span className="logo-text">Plataforma de Hospedaje</span>
         </div>
       </Link>

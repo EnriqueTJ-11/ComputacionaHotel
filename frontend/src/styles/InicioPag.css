@@ -1,0 +1,70 @@
+.inicio-pag {
+  background-image: linear-gradient(45deg, #f2f55abe, #ffcc99);
+  padding: 20px;
+}
+
+.barra-buscar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  gap: 10px;
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+}
+
+.barra-buscar {
+  padding: 10px;
+  border: 1px solid #704900;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 50%; /* O ajusta el ancho según lo necesites */
+  max-width: 600px; /* Limita el ancho máximo si es necesario */
+}
+
+.boton-buscar {
+  padding: 10px 20px;
+  background-color: #b48400;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.boton-buscar:hover {
+  background-color: #9c8000;
+  transform: translateY(-2px);
+}
+
+.contenedor-hoteles {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 columnas responsivas */
+  gap: 20px;
+}
+
+.hotel-container {
+  border: 1px solid #994500;
+  border-radius: 15px;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.hotel-container:hover {
+  transform: translateY(-2px);
+}
+
+.hotel-container h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.hotel-container p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Puedes agregar más estilos para la información específica del hotel aquí */
