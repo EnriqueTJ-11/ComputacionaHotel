@@ -45,6 +45,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon person-icon">👤</i>
                                     <input
                                         type="text"
+                                        id="nombre1_usuario" // Añadido id
                                         name="nombre1_usuario"
                                         value={formData.nombre1_usuario}
                                         onChange={handleChange}
@@ -58,6 +59,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon person-icon">👤</i>
                                     <input
                                         type="text"
+                                        id="nombre2_usuario" // Añadido id
                                         name="nombre2_usuario"
                                         value={formData.nombre2_usuario}
                                         onChange={handleChange}
@@ -70,6 +72,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon person-icon">👤</i>
                                     <input
                                         type="text"
+                                        id="apellido1_usuario" // Añadido id
                                         name="apellido1_usuario"
                                         value={formData.apellido1_usuario}
                                         onChange={handleChange}
@@ -83,6 +86,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon person-icon">👤</i>
                                     <input
                                         type="text"
+                                        id="apellido2_usuario" // Añadido id
                                         name="apellido2_usuario"
                                         value={formData.apellido2_usuario}
                                         onChange={handleChange}
@@ -97,6 +101,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon user-icon">@</i>
                                     <input
                                         type="email"
+                                        id="email_usuario" // Añadido id
                                         name="email_usuario"
                                         value={formData.email_usuario}
                                         onChange={handleChange}
@@ -110,6 +115,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon lock-icon">🔒</i>
                                     <input
                                         type="password"
+                                        id="contrasena_usuario" // Añadido id
                                         name="contrasena_usuario"
                                         value={formData.contrasena_usuario}
                                         onChange={handleChange}
@@ -123,6 +129,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon lock-icon">🔒</i>
                                     <input
                                         type="password"
+                                        id="confirmar_contrasena" // Añadido id
                                         name="confirmar_contrasena"
                                         value={formData.confirmar_contrasena}
                                         onChange={handleChange}
@@ -136,6 +143,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                 <div className="input-icon-wrapper">
                                     <i className="icon person-icon">🏷️</i>
                                     <select
+                                        id="rol_id" // Añadido id
                                         name="rol_id"
                                         value={formData.rol_id}
                                         onChange={handleChange}
