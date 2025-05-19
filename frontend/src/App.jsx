@@ -24,21 +24,21 @@ function App() {
  const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate(); // Inicializa useNavigate
 
-        useEffect(() => {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        console.log('En el efecto de verificación de token. Token:', token, 'Ruta:', window.location.pathname, 'isAuthenticated:', isAuthenticated);
-        if (token) {
-            setIsAuthenticated(true);
-            console.log('Autenticado.');
-        } else {
-            if (window.location.pathname !== '/') {
-                console.log('No autenticado, redirigiendo a /.');
-                navigate('/');
-            } else {
-                console.log('En /, no redirigiendo.');
-            }
-        }
-    }, [navigate, isAuthenticated]); 
+        // useEffect(() => {
+        // const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        // console.log('En el efecto de verificación de token. Token:', token, 'Ruta:', window.location.pathname, 'isAuthenticated:', isAuthenticated);
+        // if (token) {
+        //     setIsAuthenticated(true);
+        //     console.log('Autenticado.');
+        // } else {
+        //     if (window.location.pathname !== '/') {
+        //         console.log('No autenticado, redirigiendo a /.');
+        //         navigate('/');
+        //     } else {
+        //         console.log('En /, no redirigiendo.');
+        //     }
+        // }
+        // }, [navigate, isAuthenticated]);
     // Interceptor para agregar el token a todas las solicitudes
     useEffect(() => {
         axios.interceptors.request.use(

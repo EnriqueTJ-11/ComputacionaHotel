@@ -11,7 +11,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
   color: white;
   padding: 0.75rem 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -19,6 +18,21 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
+  background-image: linear-gradient(90deg, #ffffff, #ffcc99, #ffffff, #ffcc99, #ffcc99, #ffffff); /* Múltiples colores en el gradiente */
+  background-size: 400% 100%; /* Ancho grande para el movimiento horizontal */
+  animation: waveGradient 20s infinite linear;
+}
+
+@keyframes waveGradient {
+  0% {
+    background-position: 0% 50%; /* Inicio del movimiento */
+  }
+  50% {
+    background-position: 100% 50%; /* Punto medio del movimiento */
+  }
+  100% {
+    background-position: 0% 50%; /* Fin del movimiento (se repite) */
+  }
 }
 
 .logo-link {

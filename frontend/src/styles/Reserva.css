@@ -15,9 +15,9 @@
 .search-container {
   position: relative;
   width: 90%; /* Ancho del 80% como solicitado */
-  height: 300px;
+  height: 250px;
   margin: 0 auto 0; /* 30px de margen superior y centrado */
-  background-image: linear-gradient(45deg, #f2f55a83, #ffcc9988);
+  background-image: white;
   background-size: cover;
   background-position: center;
   border-radius: 12px; /* Bordes redondeados */
@@ -31,11 +31,11 @@
   height: 100%;
   display: flex;
   justify-content: center;
-  
+
 }
 
 .search-title {
-  margin: 65px auto 0;
+  margin: 40px auto 0;
   font-family: var(--font-heading  );
   font-size: 2.5rem;
   color: #020103;
@@ -44,7 +44,7 @@
 
 .search-bar-wrapper {
   position: absolute;
-  bottom: 90px;
+  bottom: 50px;
   left: 0;
   right: 0;
   width: 85%;
@@ -142,76 +142,6 @@
   background-color: #b48d0e;
 }
 
-/* Estilos para el selector de fechas */
-.date-picker-modal {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 400px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  z-index: 1000; /* Z-index elevado para asegurar que esté por encima de todo */
-  margin-top: 10px;
-}
-
-.date-picker-header {
-  margin-bottom: 15px;
-}
-
-.date-picker-header h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-}
-
-.date-picker-inputs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.date-input-container {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.date-input-container:last-child {
-  margin-right: 0;
-}
-
-.date-input-container label {
-  display: block;
-  margin-bottom: 5px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: #666;
-}
-
-.date-input-container input {
-  width: 90%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: var(--font-body);
-  font-size: 14px;
-}
-
-.date-picker-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.date-picker-apply {
-  background-color: #cea419;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: bold;
-}
 
 /* Estilos para el selector de huéspedes */
 .guest-picker-modal {

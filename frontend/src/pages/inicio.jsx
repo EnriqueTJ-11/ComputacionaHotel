@@ -1,12 +1,12 @@
 // src/pages/Inicio.jsx
 import React from 'react';
-import '../styles/Inicio.css'; // Si tienes estilos para esta página
-import HotelSearch from '../components/HotelSearch';
+import '../styles/InicioPag.css'; // Si tienes estilos para esta página
+import InicioPag from '../components/InicioPag';
 
 function Inicio() {
   return (
     <div >
-      <HotelSearch />
+      <InicioPag />
     </div>
   );
 }
