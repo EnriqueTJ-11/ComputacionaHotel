@@ -1,7 +1,7 @@
 // LoginPage.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/LoginPage.css';
+import '../styles/LoginUsuario.css';
 import hotelRoomImage from '../assets/hotel-room.jpg'; // Asegúrate de tener esta imagen
 
 const LoginPage = () => {
@@ -66,7 +66,10 @@ const LoginPage = () => {
 
               </div>
 
-              <button type="submit" className="login-button">INGRESAR</button>
+              <Link to="/inicio" style={{ textDecoration: 'none' }}>
+                <button type="button" className="login-button">INGRESAR</button>
+              </Link>
+
             </form>
           </div>
         </div>

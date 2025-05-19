@@ -24,8 +24,8 @@ function App() {
       <NavbarNoAuth />
       <div className="App">
         <Routes>
-          <Route path="/" element={<Inicio />} /> 
-          <Route path="/inicioSesion" element={<InicioSesion />} />
+          <Route path="/" element={<InicioSesion />} /> 
+          <Route path="/inicio" element={<Inicio />} />
           <Route path="/register" element={<Register />} />
           <Route path="/buscar" element={<TraerHoteles />} />
         </Routes>
