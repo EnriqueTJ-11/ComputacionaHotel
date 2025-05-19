@@ -38,7 +38,7 @@ async function createUser(userData) {
 
 async function getRoles(roleNames = []) {
   const placeholders = roleNames.map(() => '?').join(',');
-  const query = `SELECT id_rol, nombre_rol FROM roles WHERE nombre_rol IN (${placeholders})`;
+    
   
   return executeQuery(query, roleNames);
 }
