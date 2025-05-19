@@ -1,6 +1,6 @@
 // pages/inicio.jsx
 import React from 'react';
-import LoginPage from '../components/LoginPage';
+import LoginPage from '../components/LoginUsuario';
 
 function Inicio() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import RegisterHotel from '../components/RegisterHotel';
+import RegisterHotel from '../components/RegisterUsuario';
 import axios from 'axios';
-import '../styles/RegisterHotel.css'; // Asegúrate de tener este archivo CSS
+import '../styles/RegisterUsuario.css'; // Asegúrate de tener este archivo CSS
 
 
 function Register() {
@@ -43,13 +43,15 @@ function Register() {
     };
 
     return (
-        <div className="register-page">
-            {registrationError && <p className="error-message">{registrationError}</p>}
-            {registrationSuccess ? (
-                <p className="success-message">Registro exitoso. ¡Puedes iniciar sesión!</p>
-            ) : (
-                <RegisterHotel roles={roles} onSubmit={handleSubmit} />
-            )}
+        <div className="container-general">
+            <div className="register-page">
+                {registrationError && <p className="error-message">{registrationError}</p>}
+                {registrationSuccess ? (
+                    <p className="success-message">Registro exitoso. ¡Puedes iniciar sesión!</p>
+                ) : (
+                    <RegisterHotel roles={roles} onSubmit={handleSubmit} />
+                )}
+            </div>
         </div>
     );
 }
