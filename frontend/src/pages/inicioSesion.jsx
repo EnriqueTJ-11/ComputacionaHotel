@@ -20,7 +20,7 @@ const InicioSesion = () => {
         e.preventDefault();
         console.log('Intentando iniciar sesión con:', formData);
         try {
-            const response = await axios.post('http://localhost:3000/usuarios/login', formData);
+            const response = await axios.post('http://localhost:3000/api/auth/login', formData);
             console.log('Inicio de sesión exitoso', response.data);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('usuarioId', response.data.usuarioId);
