@@ -1,176 +1,169 @@
-// RegisterHotel.jsx
 import React, { useState } from 'react';
 import '../styles/RegisterHotel.css';
 import { Link } from 'react-router-dom';
 
-const RegisterHotel = () => {
-  const [formData, setFormData] = useState({
-    hotelName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    address: '',
-    city: '',
-    phone: '',
-    description: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
+const RegisterHotel = ({ roles, onSubmit }) => {
+    const [formData, setFormData] = useState({
+        email_usuario: '',
+        contrasena_usuario: '',
+        confirmar_contrasena: '',
+        nombre1_usuario: '',
+        nombre2_usuario: '',
+        apellido1_usuario: '',
+        apellido2_usuario: '',
+        rol_id: ''
     });
-  };
+    const [passwordMatchError, setPasswordMatchError] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validación básica
-    if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-    console.log('Datos del registro:', formData);
-    // Aquí implementarías la lógica para enviar los datos al servidor
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
 
-  return (
-    <div className="register-container">
-      <div className="register-card">
-        <div className="register-form-container">
-          <h1 className="register-title">Registro de Hotel</h1>
-          
-          <form onSubmit={handleSubmit} className="register-form">
-            <div className="form-columns">
-              {/* Columna izquierda */}
-              <div className="form-column">
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon hotel-icon">🏨</i>
-                    <input 
-                      type="text" 
-                      name="hotelName"
-                      value={formData.hotelName}
-                      onChange={handleChange}
-                      placeholder="Nombre del Hotel" 
-                      required 
-                    />
-                  </div>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setPasswordMatchError(formData.contrasena_usuario !== formData.confirmar_contrasena);
+
+        if (passwordMatchError) {
+            return;
+        }
+        onSubmit(formData);
+    };
+
+    return (
+        <div className="register-container">
+            <div className="register-card">
+                <div className="register-form-container">
+                    <h1 className="register-title">Registro de Usuario</h1>
+                    <form onSubmit={handleSubmit} className="register-form">
+                        <div className="form-columns">
+                            <div className="form-column">
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon user-icon">👤</i>
+                                        <input
+                                            type="email"
+                                            name="email_usuario"
+                                            value={formData.email_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Email"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon lock-icon">🔒</i>
+                                        <input
+                                            type="password"
+                                            name="contrasena_usuario"
+                                            value={formData.contrasena_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Contraseña"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon lock-icon">🔒</i>
+                                        <input
+                                            type="password"
+                                            name="confirmar_contrasena"
+                                            value={formData.confirmar_contrasena}
+                                            onChange={handleChange}
+                                            placeholder="Confirmar Contraseña"
+                                            required
+                                        />
+                                    </div>
+                                    {passwordMatchError && <p className="error-message">Las contraseñas no coinciden</p>}
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon person-icon"></i>
+                                        <input
+                                            type="text"
+                                            name="nombre1_usuario"
+                                            value={formData.nombre1_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Primer Nombre"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon person-icon"></i>
+                                        <input
+                                            type="text"
+                                            name="nombre2_usuario"
+                                            value={formData.nombre2_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Segundo Nombre (Opcional)"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-column">
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon person-icon"></i>
+                                        <input
+                                            type="text"
+                                            name="apellido1_usuario"
+                                            value={formData.apellido1_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Primer Apellido"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon person-icon"></i>
+                                        <input
+                                            type="text"
+                                            name="apellido2_usuario"
+                                            value={formData.apellido2_usuario}
+                                            onChange={handleChange}
+                                            placeholder="Segundo Apellido (Opcional)"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon tag-icon">🏷️</i>
+                                        <select
+                                            name="rol_id"
+                                            value={formData.rol_id}
+                                            onChange={handleChange}
+                                            required
+                                        >
+                                            <option value="">Seleccionar Rol</option>
+                                            {roles.map(rol => (
+                                                <option key={rol.id_rol} value={rol.id_rol}>
+                                                    {rol.nombre_rol}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-actions">
+                            <button type="submit" className="register-button">REGISTRAR USUARIO</button>
+                            <p className="login-link">
+                                ¿Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión</Link>
+                            </p>
+                        </div>
+                    </form>
                 </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon user-icon">👤</i>
-                    <input 
-                      type="email" 
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Email" 
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon lock-icon">🔒</i>
-                    <input 
-                      type="password" 
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="Contraseña" 
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon lock-icon">🔒</i>
-                    <input 
-                      type="password" 
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      placeholder="Confirmar Contraseña" 
-                      required 
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              {/* Columna derecha */}
-              <div className="form-column">
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon location-icon">📍</i>
-                    <input 
-                      type="text" 
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="Dirección" 
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon city-icon">🏙️</i>
-                    <input 
-                      type="text" 
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      placeholder="Ciudad" 
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper">
-                    <i className="icon phone-icon">📞</i>
-                    <input 
-                      type="tel" 
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="Teléfono" 
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <div className="input-icon-wrapper textarea-wrapper">
-                    <i className="icon desc-icon">📝</i>
-                    <textarea 
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      placeholder="Descripción del hotel" 
-                      rows="3"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
-            
-            <div className="form-actions">
-              <button type="submit" className="register-button">REGISTRAR HOTEL</button>
-              <p className="login-link">
-                ¿Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión</Link>
-              </p>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default RegisterHotel;
