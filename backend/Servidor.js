@@ -26,14 +26,15 @@ const pool = mysql.createPool({
 });
 
 // Función para ejecutar consultas SQL
-async function ejecutarConsultaMySQL(sql, valores = []) {
-  try {
-    const [filas] = await pool.execute(sql, valores);
-    return filas;
-  } catch (error) {
-    console.error('Error al ejecutar la consulta a MySQL:', error);
-    throw error;
-  }
+async function ejecutarConsultaMySQL(query, params) {
+    try {
+        const [rows] = await pool.execute(query, params);
+        console.log('Resultados:', rows);
+        return rows;
+    } catch (error) {
+        console.error('Error al ejecutar la consulta:', error);
+        throw error;
+    }
 }
 
 // ==========================================================
@@ -70,28 +71,58 @@ app.get('/query-ontologia', (req, res) => { // Cambié el nombre para evitar con
 //  Rutas para interactuar con la base de datos MySQL
 // ==========================================================
 
-// Ejemplo: Obtener todos los hoteles de MySQL
-app.get('/hoteles', async (req, res) => {
-  try {
-    const hoteles = await ejecutarConsultaMySQL('SELECT * FROM hoteles');
-    res.json(hoteles);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener los hoteles' });
-  }
+// Ruta para registrar un nuevo usuario (usando procedimiento almacenado)
+app.post('/usuarios/registrar', async (req, res) => {
+    try {
+        const {
+            email_usuario,
+            contrasena_usuario,
+            nombre1_usuario,
+            nombre2_usuario,
+            apellido1_usuario,
+            apellido2_usuario,
+            rol_id
+        } = req.body;
+
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash(contrasena_usuario, 10);
+
+        // Llamar al procedimiento almacenado
+        await ejecutarConsultaMySQL(
+            'CALL sp_registrar_usuario(?, ?, ?, ?, ?, ?, ?)',
+            [email_usuario, hashedPassword, nombre1_usuario, nombre2_usuario, apellido1_usuario, apellido2_usuario, rol_id]
+        );
+
+        res.status(201).json({ mensaje: 'Usuario registrado con éxito' }); // Ya no enviamos el ID
+
+    } catch (error) {
+        console.error('Error al registrar usuario:', error);
+        res.status(500).json({ error: 'Error al registrar usuario' });
+    }
 });
 
-// Ejemplo: Crear un nuevo hotel en MySQL
-app.post('/hoteles', async (req, res) => {
-  try {
-    const { nombre_hotel, descripcion_hotel, imagen_hotel, usuario_creador_id } = req.body;
-    const resultado = await ejecutarConsultaMySQL(
-      'INSERT INTO hoteles (nombre_hotel, descripcion_hotel, imagen_hotel, usuario_creador_id) VALUES (?, ?, ?, ?)',
-      [nombre_hotel, descripcion_hotel, imagen_hotel, usuario_creador_id]
-    );
-    res.status(201).json({ mensaje: 'Hotel creado', id: resultado.insertId });
-  } catch (error) {
-    res.status(500).json({ error: 'Error al crear el hotel' });
-  }
+
+// traer roles
+app.get('/roles-usuario-cliente', async (req, res) => {
+    try {
+        const result = await ejecutarConsultaMySQL(
+            'SELECT id_rol, nombre_rol FROM roles WHERE nombre_rol IN (?, ?)',
+            ['Usuario', 'Cliente']
+        );
+        console.log('Tipo de result:', typeof result);
+        console.log('Contenido de result:', result);
+        const roles = result; // ¡Corrección aquí!
+
+        const rolesMap = {};
+        roles.forEach(rol => {
+            rolesMap[rol.nombre_rol] = rol.id_rol;
+        });
+
+        res.json(rolesMap);
+    } catch (error) {
+        console.error('Error al obtener IDs de roles:', error);
+        res.status(500).json({ error: 'Error al obtener IDs de roles' });
+    }
 });
 
 // ==========================================================
@@ -159,5 +190,5 @@ app.get('/alojamientos-completos', async (req, res) => { // Renombré la ruta pa
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}/query-ontologia`);
-  console.log(`Servidor corriendo en http://localhost:${port}/hoteles`);
+  console.log(`Servidor corriendo en http://localhost:${port}/roles-usuario-cliente`);
 });

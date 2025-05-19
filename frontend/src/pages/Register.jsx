@@ -1,13 +1,57 @@
-// pages/register.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import RegisterHotel from '../components/RegisterHotel';
+import axios from 'axios';
+import '../styles/RegisterHotel.css'; // Asegúrate de tener este archivo CSS
+
 
 function Register() {
-  return (
-    <div className="register-page">
-      <RegisterHotel />
-    </div>
-  );
+    const [roles, setRoles] = useState([]);
+    const [registrationError, setRegistrationError] = useState(null);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/roles-usuario-cliente');
+                setRoles(Object.entries(response.data).map(([nombre_rol, id_rol]) => ({ id_rol, nombre_rol })));
+            } catch (error) {
+                console.error('Error al obtener roles:', error);
+                setRegistrationError('Error al cargar los roles. Por favor, intenta de nuevo.');
+            }
+        };
+
+        fetchRoles();
+    }, []);
+
+    const handleSubmit = async (formData) => {
+        if (formData.contrasena_usuario !== formData.confirmar_contrasena) {
+            setRegistrationError('Las contraseñas no coinciden.');
+            return false; // Indicate failure
+        }
+
+        try {
+            const response = await axios.post('http://localhost:3000/usuarios/registrar', formData);
+            console.log('Usuario registrado con éxito', response.data);
+            setRegistrationError(null); // Clear any previous errors
+            setRegistrationSuccess(true);
+            return true; // Indicate success
+        } catch (error) {
+            console.error('Error al registrar usuario:', error);
+            setRegistrationError(error.response?.data?.error || 'Error al registrar el usuario. Por favor, intenta de nuevo.');
+            return false; // Indicate failure
+        }
+    };
+
+    return (
+        <div className="register-page">
+            {registrationError && <p className="error-message">{registrationError}</p>}
+            {registrationSuccess ? (
+                <p className="success-message">Registro exitoso. ¡Puedes iniciar sesión!</p>
+            ) : (
+                <RegisterHotel roles={roles} onSubmit={handleSubmit} />
+            )}
+        </div>
+    );
 }
 
 export default Register;
