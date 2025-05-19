@@ -1,47 +1,83 @@
+// App.jsx
 import InicioSesion from './pages/inicioSesion';
 import NavbarNoAuth from './components/NavbarNoAuth';
 import NavbarAuth from './components/navBar';
 import Inicio from './pages/inicio';
 import Register from './pages/Register';
 import TraerHoteles from './pages/TraerHoteles';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-
-
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
+
+// Crear un contexto de autenticación para compartir en toda la aplicación
+export const AuthContext = createContext();
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Verificar conexión con la API (ontología)
   useEffect(() => {
-    axios.get('http://localhost:3000/query-ontologia')
+    axios.get('http://localhost:3000/api/ontologia/query')
       .then(response => {
-        console.log('Respuesta del backend:', response.data);
+        console.log('Respuesta del backend (ontología):', response.data);
       })
       .catch(error => {
-        console.error('Error al conectar con la API:', error);
+        console.error('Error al conectar con la API (ontología):', error);
       });
   }, []);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate(); // Inicializa useNavigate
+  // Función para cerrar sesión que podemos pasar al NavbarAuth
+  const handleLogout = () => {
+    // Eliminar tokens
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuarioId');
+    sessionStorage.removeItem('token');
 
+    // Actualizar el estado de autenticación
+    setIsAuthenticated(false);
+
+    // Redirigir al login
+    navigate('/', { state: { logoutSuccess: true } });
+    console.log('Sesión cerrada desde App.js');
+  };
+
+  // Verificar autenticación al cargar y cuando cambia la ruta
   useEffect(() => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    console.log('En el efecto de verificación de token. Token:', token, 'Ruta:', window.location.pathname, 'isAuthenticated:', isAuthenticated);
-    if (token) {
-      setIsAuthenticated(true);
-      console.log('Autenticado.');
-    } else {
-      if (window.location.pathname !== '/') {
-        console.log('No autenticado, redirigiendo a /.');
-        navigate('/');
+    const checkAuth = () => {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      console.log('Verificando token:', token, 'Ruta:', location.pathname);
+
+      if (token) {
+        setIsAuthenticated(true);
+        console.log('Autenticado.');
+
+        // Si estamos en la página de login y hay token, redirigir a inicio
+        if (location.pathname === '/') {
+          navigate('/inicio');
+        }
       } else {
-        console.log('En /, no redirigiendo.');
+        setIsAuthenticated(false);
+        console.log('No autenticado');
+
+        // Rutas protegidas que requieren autenticación
+        const protectedRoutes = ['/inicio', '/buscar', '/perfil', '/registerHotel'];
+
+        if (protectedRoutes.includes(location.pathname)) {
+          console.log('Intentando acceder a ruta protegida, redirigiendo a login');
+          navigate('/');
+        }
       }
-    }
-  }, [navigate, isAuthenticated]);
-  // Interceptor para agregar el token a todas las solicitudes
+    };
+
+    checkAuth();
+  }, [navigate, location.pathname, isAuthenticated]); // Añadida isAuthenticated como dependencia
+
+  // Interceptores de Axios
   useEffect(() => {
-    axios.interceptors.request.use(
+    // Interceptor de solicitudes para agregar token
+    const requestInterceptor = axios.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('token') || sessionStorage.getItem('token');
         if (token) {
@@ -54,7 +90,8 @@ function App() {
       }
     );
 
-    axios.interceptors.response.use(
+    // Interceptor de respuestas para manejar errores de autenticación
+    const responseInterceptor = axios.interceptors.response.use(
       (response) => {
         return response;
       },
@@ -62,6 +99,7 @@ function App() {
         if (error.response && error.response.status === 401) {
           // Si recibimos un 401 (No autorizado), limpiar el token y redirigir al inicio de sesión
           localStorage.removeItem('token');
+          localStorage.removeItem('usuarioId');
           sessionStorage.removeItem('token');
           setIsAuthenticated(false);
           navigate('/');
@@ -69,21 +107,26 @@ function App() {
         return Promise.reject(error);
       }
     );
-  }, [navigate]);
 
+    // Limpiar interceptores al desmontar el componente
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+      axios.interceptors.response.eject(responseInterceptor);
+    };
+  }, [navigate, setIsAuthenticated]); // Añadida setIsAuthenticated como dependencia
 
   return (
-    <>
-      {isAuthenticated ? <NavbarAuth /> : <NavbarNoAuth />}
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, handleLogout }}>
+      {isAuthenticated ? <NavbarAuth handleLogout={handleLogout} /> : <NavbarNoAuth />}
       <div className="App">
         <Routes>
-          <Route path="/" element={<InicioSesion />} />
+          <Route path="/" element={<InicioSesion setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/register" element={<Register />} />
           <Route path="/buscar" element={<TraerHoteles />} />
         </Routes>
       </div>
-    </>
+    </AuthContext.Provider>
   );
 }
 

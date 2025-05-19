@@ -11,7 +11,7 @@ function TraerHoteles() {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get('http://localhost:3000/query-ontologia');
+        const response = await axios.get('http://localhost:3000/api/ontologia/query');
         setHoteles(response.data); // La respuesta es directamente el array
       } catch (err) {
         setError(err);

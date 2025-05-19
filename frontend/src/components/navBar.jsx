@@ -3,15 +3,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import '../styles/navBar.css';
 
-function Navbar() {
+function NavbarAuth({ handleLogout }) {
   const location = useLocation();
-  
+
   // Lista de enlaces para la navegación
   const navItems = [
     { path: '/hospedaje', label: 'Buscar Hospedaje', icon: '🛏️' },
     { path: '/perfil', label: 'Mi Perfil', icon: '👤' },
     { path: '/registerHotel', label: 'Registrar Hospedaje', icon: '+' },
-    { path: '/', label: 'Cerrar Sesión', icon: '🔗' }
+    { path: '/', label: 'Cerrar Sesión', icon: '🔗', onClick: handleLogout } // Usamos onClick directamente
   ];
 
   return (
@@ -26,17 +26,24 @@ function Navbar() {
           <span className="logo-text">Plataforma de Hospedaje</span>
         </div>
       </Link>
-      
+
       <ul className="nav-links">
         {navItems.map((item) => (
-          <li 
-            key={item.path} 
+          <li
+            key={item.path}
             className={location.pathname === item.path ? 'active' : ''}
           >
-            <Link to={item.path}>
-              <span className="nav-icon">{item.icon}</span>
-              <span className="nav-text">{item.label}</span>
-            </Link>
+            {item.onClick ? ( // Si el item tiene un onClick, usa un botón
+              <button onClick={item.onClick} className="nav-link-button">
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-text">{item.label}</span>
+              </button>
+            ) : ( // Si no tiene onClick, usa un Link
+              <Link to={item.path}>
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-text">{item.label}</span>
+              </Link>
+            )}
           </li>
         ))}
       </ul>
@@ -44,4 +51,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarAuth;
