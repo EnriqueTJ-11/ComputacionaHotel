@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors'); // Importa el middleware CORS
 const SparqlClient = require('sparql-client-2');
 const mysql = require('mysql2/promise'); // Importa el driver de MySQL
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secretKey = 'jaidersaenz2002'; // Cambia esto por una clave secreta más segura
 
 const app = express();
 const port = 3000;
@@ -70,7 +73,44 @@ app.get('/query-ontologia', (req, res) => { // Cambié el nombre para evitar con
 // ==========================================================
 //  Rutas para interactuar con la base de datos MySQL
 // ==========================================================
+app.post('/usuarios/login', async (req, res) => {
+    const { email_usuario, contrasena_usuario } = req.body;
+    console.log('Attempting login for:', email_usuario);
 
+    try {
+        const rows = await ejecutarConsultaMySQL( // Remove the array destructuring here
+            'SELECT * FROM usuarios WHERE email_usuario = ?',
+            [email_usuario]
+        );
+        const usuario = rows[0]; // The user object is the first element of the 'rows' array
+        console.log('Usuario after query:', usuario);
+
+        if (!usuario) {
+            console.log('User not found:', email_usuario);
+            return res.status(401).json({ error: 'Email no encontrado' });
+        }
+
+        const contrasenaValida = await bcrypt.compare(contrasena_usuario, usuario.contrasena_usuario);
+        console.log('Password valid:', contrasenaValida);
+
+        if (!contrasenaValida) {
+            console.log('Incorrect password for:', email_usuario);
+            return res.status(401).json({ error: 'Contraseña incorrecta' });
+        }
+
+        const token = jwt.sign(
+            { usuarioId: usuario.id_usuario, email: usuario.email_usuario, rolId: usuario.rol_id },
+            secretKey,
+            { expiresIn: '1h' }
+        );
+
+        res.json({ message: 'Inicio de sesión exitoso', token: token, usuarioId: usuario.id_usuario });
+
+    } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        res.status(500).json({ error: 'Error al iniciar sesión' });
+    }
+});
 // Ruta para registrar un nuevo usuario (usando procedimiento almacenado)
 app.post('/usuarios/registrar', async (req, res) => {
     try {
