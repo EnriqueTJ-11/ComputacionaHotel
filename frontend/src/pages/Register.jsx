@@ -9,19 +9,26 @@ function Register() {
     const [registrationError, setRegistrationError] = useState(null);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
-    useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/roles-usuario-cliente');
-                setRoles(Object.entries(response.data).map(([nombre_rol, id_rol]) => ({ id_rol, nombre_rol })));
-            } catch (error) {
-                console.error('Error al obtener roles:', error);
+useEffect(() => {
+    const fetchRoles = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/auth/roles-usuario-cliente');
+            console.log('Respuesta de roles:', response.data); // <-- ¡Sigue siendo útil para depurar!
+            if (response.data.success) {
+                const rolesData = response.data.data; // Accede a la propiedad 'data'
+                setRoles(Object.entries(rolesData).map(([nombre_rol, id_rol]) => ({ id_rol, nombre_rol })));
+            } else {
+                console.error('Error al cargar roles:', response.data.message);
                 setRegistrationError('Error al cargar los roles. Por favor, intenta de nuevo.');
             }
-        };
+        } catch (error) {
+            console.error('Error al obtener roles:', error);
+            setRegistrationError('Error al cargar los roles. Por favor, intenta de nuevo.');
+        }
+    };
 
-        fetchRoles();
-    }, []);
+    fetchRoles();
+}, []);
 
     const handleSubmit = async (formData) => {
         if (formData.contrasena_usuario !== formData.confirmar_contrasena) {
@@ -30,7 +37,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/usuarios/registrar', formData);
+            const response = await axios.post('http://localhost:3000/api/auth/registrar', formData);
             console.log('Usuario registrado con éxito', response.data);
             setRegistrationError(null); // Clear any previous errors
             setRegistrationSuccess(true);
