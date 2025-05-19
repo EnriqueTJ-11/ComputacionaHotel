@@ -41,4 +41,4 @@ const InicioSesion = () => {
     );
 };
 
-export default InicioSesion;
+export default InicioSesion;

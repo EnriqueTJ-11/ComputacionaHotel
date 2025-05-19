@@ -77,4 +77,4 @@ const LoginPage = ({ onSubmit, onChange, formData }) => { // Recibe onSubmit, on
     );
 };
 
-export default LoginPage;
+export default LoginPage;

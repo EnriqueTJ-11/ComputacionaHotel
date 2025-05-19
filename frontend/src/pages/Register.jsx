@@ -30,7 +30,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/usuarios/registrar', formData);
+            const response = await axios.post('http://localhost:3000/api/auth/registrar', formData);
             console.log('Usuario registrado con éxito', response.data);
             setRegistrationError(null); // Clear any previous errors
             setRegistrationSuccess(true);
@@ -56,4 +56,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Register;
