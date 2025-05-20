@@ -1,67 +1,37 @@
+// src/components/InicioPag.jsx
 import React from 'react';
 import '../styles/InicioPag.css'; // Importa los estilos CSS
-import Busqueda from '../components/Reserva'; // Importa los estilos CSS
+import Busqueda from '../components/Reserva'; // Importa tu componente de búsqueda
 
-function InicioPag() {
-    return (
-        <div className="inicio-pag">
-           
-            <Busqueda />
+// El componente ahora recibe 'hoteles' como prop
+function InicioPag({ hoteles }) {
+  return (
+    <div className="inicio-pag">
 
-            <div className="contenedor-hoteles">
-                {/* Aquí puedes mapear tus datos de hoteles y renderizar los contenedores */}
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 1</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 2</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 3</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 4</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 5</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 6</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 7</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                <div className="hotel-container">
-                    {/* Espacio para la información del hotel */}
-                    <h3>Hotel Ejemplo 8</h3>
-                    <p>Descripción breve del hotel.</p>
-                    {/* ... más información ... */}
-                </div>
-                {/* ... puedes agregar más contenedores según la cantidad de hoteles ... */}
+      <Busqueda />
+
+      <div className="contenedor-hoteles">
+        {hoteles.length > 0 ? (
+          hoteles.map((hotel, index) => (
+            <div key={hotel.id_alojamiento || index} className="hotel-container">
+              {/* Aquí usamos los datos del objeto 'hotel' */}
+              <h3>{hotel.nombre}</h3>
+              <p>{hotel.descripcion}</p>
+              <p>Capacidad: {hotel.capacidad}</p>
+              <p>Categoría: {hotel.categoria}</p>
+              {/* Puedes añadir más información del hotel si la traes de la ontología */}
+              {/* Por ejemplo: <p>Ubicación: {hotel.latitud}, {hotel.longitud}</p> */}
+              {/* O un botón para ver más detalles */}
+              {/* <button className="ver-detalles-btn">Ver Detalles</button> */}
             </div>
-        </div>
-    );
+          ))
+        ) : (
+          // Mensaje si no hay hoteles o si la carga fue exitosa pero no hay datos
+          <div className="no-hoteles-message">No se encontraron hoteles.</div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default InicioPag;

@@ -1,64 +1,68 @@
-const { getAllHotels } = require('../models/hotel.model');
+
 const { client } = require('../config/sparql.config');
 const { successResponse, errorResponse } = require('../utils/response');
 
 async function getEnrichedHotels(req, res) {
   try {
-    // 1. Obtener hoteles desde MySQL
-    const hotelesMySQL = await getAllHotels();
-
-    // Si no hay hoteles, devolver lista vacía
-    if (!hotelesMySQL.length) {
-      return successResponse(res, []);
-    }
-
-    // 2. Preparar consulta SPARQL
-    const hotelIds = hotelesMySQL.map(hotel => hotel.id_hotel).join('", "');
-
     const consultaOntologia = `
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX : <http://www.semanticweb.org/ontologies/hospedaje#>
-      
-      SELECT 
-        ?alojamiento ?descripcion ?numeroHabitaciones ?latitud ?longitud
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      PREFIX : <http://www.semanticweb.org/ontologies/hotel#>
+
+      SELECT ?alojamiento
+             (STR(?nombre) AS ?Nombre_)
+             (STR(?capacidad) AS ?Capacidad_)
+             (STR(?categoria) AS ?Categoria_)
+             (STR(?descripcion) AS ?Descripcion_)
       WHERE {
-        ?alojamiento a :Alojamiento ;
-                     :descripción ?descripcion ;
-                     :NumeroHabitaciones ?numeroHabitaciones ;
-                     :estáUbicadoEn ?ubicacion .
-        ?ubicacion :Latitud ?latitud ;
-                   :Longitud ?longitud .
-        FILTER (STRAFTER(STR(?alojamiento), "#") IN ("${hotelIds}"))  
+        ?alojamiento a ?tipo .
+        VALUES ?tipo {
+          :Hotel :Hostal :Apartamento :CasaRural :BedAndBreakfast
+          :AlbergueJuvenil :Motel :Posada :Resort :HotelBoutique
+        }
+
+        ?alojamiento :nombre ?nombre ;
+                     :capacidadTotal ?capacidad ;
+                     :categoria ?categoria;
+                     :descripcion ?descripcion.
       }
     `;
 
-    // 3. Ejecutar consulta SPARQL
+    // 1. Ejecutar consulta SPARQL
     const resultadosOntologia = await client.query(consultaOntologia).execute();
 
-    // 4. Combinar resultados
-    const alojamientosCompletos = hotelesMySQL.map(hotel => {
-      const alojamientoOntologia = resultadosOntologia.results.bindings.find(item => 
-        item.alojamiento.value.endsWith("#" + hotel.id_hotel)
-      );
+    // 2. Formatear los resultados de la ontología
+    const alojamientosOntologia = resultadosOntologia.results.bindings.map(item => {
+      // Extrae solo la parte relevante del URI (e.g., "Hotel_1" de "http://www.semanticweb.org/ontologies/hotel#Hotel_1")
+      const idAlojamiento = item.alojamiento.value.split('#').pop(); 
+      const categoriaLimpia = item.Categoria_.value.split('#').pop();
 
       return {
-        ...hotel,
-        descripcion_ontologia: alojamientoOntologia ? alojamientoOntologia.descripcion.value : null,
-        numeroHabitaciones_ontologia: alojamientoOntologia ? alojamientoOntologia.numeroHabitaciones.value : null,
-        latitud_ontologia: alojamientoOntologia ? alojamientoOntologia.latitud.value : null,
-        longitud_ontologia: alojamientoOntologia ? alojamientoOntologia.longitud.value : null,
+        id_alojamiento_ontologia: idAlojamiento, // Puedes usar esto como un identificador único
+        nombre: item.Nombre_.value,
+        capacidad: parseInt(item.Capacidad_.value), // Asegurarse de que sea un número
+        categoria: categoriaLimpia,
+        descripcion: item.Descripcion_.value,
+        // Si tu consulta SPARQL tuviera latitud, longitud, etc., las añadirías aquí
+        // latitud: item.latitud_ontologia ? parseFloat(item.latitud_ontologia.value) : null,
+        // longitud: item.longitud_ontologia ? parseFloat(item.longitud_ontologia.value) : null,
+        // numeroHabitaciones: item.numeroHabitaciones_ontologia ? parseInt(item.numeroHabitaciones_ontologia.value) : null,
       };
     });
 
-    return successResponse(res, alojamientosCompletos);
+    // En este punto, 'alojamientosOntologia' ya contiene todos los datos que trajiste de la ontología.
+    // Si NO necesitas combinar con MySQL, puedes responder directamente con esto.
+    return successResponse(res, alojamientosOntologia, 'Alojamientos de ontología obtenidos exitosamente');
 
   } catch (error) {
-    console.error('Error al obtener alojamientos:', error);
-    return errorResponse(res, 'Error al obtener datos de alojamientos');
+    console.error('Error al obtener alojamientos enriquecidos desde la ontología:', error);
+    // Es buena práctica no exponer detalles internos del error en producción
+    return errorResponse(res, 'Error al obtener datos de alojamientos desde la ontología');
   }
 }
 
 module.exports = {
-  getEnrichedHotels
+  getEnrichedHotels // Exporta la función
 };
