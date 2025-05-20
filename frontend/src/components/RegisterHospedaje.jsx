@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../styles/RegisterHospedaje.css';
-import { Link } from 'react-router-dom';
 
 const RegisterHotel = ({ roles, onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -8,12 +7,13 @@ const RegisterHotel = ({ roles, onSubmit }) => {
         emailContacto: '', 
         direccionEstablecimiento: '', 
         descripcionEstablecimiento: '',
-        numero_establecimiento: '',
-        capacidad_total: '',
-        num_habitaciones: '', 
+        numero_establecimiento: '', // Asumiendo que es el número de contacto
+        capacidad_total: '', // Asumiendo que es la capacidad máxima
+        num_habitaciones: '', // Asumiendo que es el número de habitaciones
         tipoEstablecimientoId: '' 
     });
-    const [passwordMatchError, setPasswordMatchError] = useState(false);
+    // Eliminamos passwordMatchError del estado si ya no manejamos contraseñas aquí
+    // const [passwordMatchError, setPasswordMatchError] = useState(false); // <--- Puedes quitar esto si no hay campos de contraseña aquí
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,14 +25,13 @@ const RegisterHotel = ({ roles, onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPasswordMatchError(formData.contrasena !== formData.confirmarContrasena);
+        // Si ya no hay campos de contraseña en este formulario, estas líneas no son necesarias
+        // setPasswordMatchError(formData.contrasena !== formData.confirmarContrasena);
+        // if (passwordMatchError) {
+        //     return;
+        // }
 
-        if (passwordMatchError) {
-            return;
-        }
-        onSubmit({
-            
-        });
+        onSubmit(formData); // Pasamos todo el formData
     };
 
     return (
@@ -47,9 +46,9 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     <i className="icon building-icon">🏢</i>
                                     <input
                                         type="text"
-                                        id="nombreEstablecimiento"
-                                        name="nombreEstablecimiento"
-                                        value={formData.nombreEstablecimiento}
+                                        id="nombre_alojamiento"
+                                        name="nombre_alojamiento"
+                                        value={formData.nombre_alojamiento}
                                         onChange={handleChange}
                                         placeholder="Nombre del establecimiento"
                                         required
@@ -66,6 +65,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                         value={formData.emailContacto}
                                         onChange={handleChange}
                                         placeholder="Email de contacto"
+                                        required // Email es crucial, lo hice requerido
                                     />
                                 </div>
                             </div>
@@ -83,9 +83,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-column">
-                            <div className="form-group">
+                             <div className="form-group">
                                 <div className="input-icon-wrapper">
                                     <i className="icon file-text-icon">📄</i>
                                     <textarea
@@ -97,14 +95,18 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                     />
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div className="form-column">
+                           
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
-                                    <i className="icon key-icon">🔑</i>
+                                    <i className="icon phone-icon">📞</i> {/* Icono de teléfono */}
                                     <input
-                                        type="text"
-                                        id=""
-                                        name=""
-                                        value={formData.contrasena}
+                                        type="text" // Cambiado a text para números de teléfono
+                                        id="numero_establecimiento"
+                                        name="numero_establecimiento"
+                                        value={formData.numero_establecimiento}
                                         onChange={handleChange}
                                         placeholder="Numero Telefonico"
                                         required
@@ -113,18 +115,31 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                             </div>
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
-                                    <i className="icon key-icon">🔑</i>
+                                    <i className="icon users-icon">👥</i> {/* Icono de usuarios para capacidad */}
                                     <input
-                                        type="text"
-                                        id=""
-                                        name=""
-                                        value={formData.confirmarContrasena}
+                                        type="number" // Cambiado a number para capacidad
+                                        id="capacidad_total"
+                                        name="capacidad_total"
+                                        value={formData.capacidad_total}
                                         onChange={handleChange}
                                         placeholder="Capacidad Total"
                                         required
                                     />
                                 </div>
-                                {passwordMatchError && <p className="error-message">Las contraseñas no coinciden</p>}
+                            </div>
+                            <div className="form-group">
+                                <div className="input-icon-wrapper">
+                                    <i className="icon bed-icon">🛏️</i> {/* Icono de cama para habitaciones */}
+                                    <input
+                                        type="number" // Cambiado a number para habitaciones
+                                        id="num_habitaciones"
+                                        name="num_habitaciones"
+                                        value={formData.num_habitaciones}
+                                        onChange={handleChange}
+                                        placeholder="Número de habitaciones"
+                                        required
+                                    />
+                                </div>
                             </div>
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
@@ -137,7 +152,8 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                         required
                                     >
                                         <option value="">Seleccionar Tipo de Establecimiento</option>
-                                        {roles.map(rol => (
+                                        {/* Aquí está la clave para evitar el error: verifica si 'roles' existe y es un array */}
+                                        {roles && Array.isArray(roles) && roles.map(rol => (
                                             <option key={rol.id_rol} value={rol.id_rol}>
                                                 {rol.nombre_rol}
                                             </option>
@@ -149,9 +165,6 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                     </div>
                     <div className="form-actions">
                         <button type="submit" className="register-button">REGISTRAR ESTABLECIMIENTO</button>
-                        <p className="login-link">
-                            ¿Ya tienes una cuenta? <Link to="/">Inicia sesión</Link>
-                        </p>
                     </div>
                 </form>
             </div>

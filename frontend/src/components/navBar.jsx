@@ -10,7 +10,7 @@ function NavbarAuth({ handleLogout }) {
   const navItems = [
     { path: '/hospedaje', label: 'Buscar Hospedaje', icon: '🛏️' },
     { path: '/perfil', label: 'Mi Perfil', icon: '👤' },
-    { path: '/registerHotel', label: 'Registrar Hospedaje', icon: '+' },
+    { path: '/registerHospedaje', label: 'Registrar Hospedaje', icon: '+' },
     { path: '/', label: 'Cerrar Sesión', icon: '🔗', onClick: handleLogout } // Usamos onClick directamente
   ];
 
