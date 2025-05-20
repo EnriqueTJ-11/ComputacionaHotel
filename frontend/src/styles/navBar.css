@@ -18,7 +18,7 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
-  background-image: linear-gradient(90deg, #ffffff, #ffcc99, #ffffff, #ffcc99, #ffcc99, #ffffff); /* Múltiples colores en el gradiente */
+  background-image: linear-gradient(90deg, #f2f55ace, #ffcc99d0, #f2f55ace, #ffcc99d0, #f2f55ace, #ffcc99d0); /* Múltiples colores en el gradiente */
   background-size: 400% 100%; /* Ancho grande para el movimiento horizontal */
   animation: waveGradient 20s infinite linear;
 }
