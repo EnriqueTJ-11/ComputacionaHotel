@@ -31,14 +31,7 @@ const RegisterHotel = ({ roles, onSubmit }) => {
             return;
         }
         onSubmit({
-            email_usuario: formData.emailContacto,
-            contrasena_usuario: formData.contrasena,
-            confirmar_contrasena: formData.confirmarContrasena,
-            nombre1_usuario: formData.nombreEstablecimiento,
-            nombre2_usuario: '', // No hay un campo directamente mapeado, podrías usar otro o dejar vacío
-            apellido1_usuario: formData.direccionEstablecimiento,
-            apellido2_usuario: formData.descripcionEstablecimiento,
-            rol_id: formData.tipoEstablecimientoId
+            
         });
     };
 
@@ -108,12 +101,12 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                 <div className="input-icon-wrapper">
                                     <i className="icon key-icon">🔑</i>
                                     <input
-                                        type="password"
-                                        id="contrasena"
-                                        name="contrasena"
+                                        type="text"
+                                        id=""
+                                        name=""
                                         value={formData.contrasena}
                                         onChange={handleChange}
-                                        placeholder="Contraseña"
+                                        placeholder="Numero Telefonico"
                                         required
                                     />
                                 </div>
@@ -122,12 +115,12 @@ const RegisterHotel = ({ roles, onSubmit }) => {
                                 <div className="input-icon-wrapper">
                                     <i className="icon key-icon">🔑</i>
                                     <input
-                                        type="password"
-                                        id="confirmarContrasena"
-                                        name="confirmarContrasena"
+                                        type="text"
+                                        id=""
+                                        name=""
                                         value={formData.confirmarContrasena}
                                         onChange={handleChange}
-                                        placeholder="Confirmar contraseña"
+                                        placeholder="Capacidad Total"
                                         required
                                     />
                                 </div>
