@@ -1,5 +1,5 @@
 // src/components/BuscarHospedaje.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/InicioPag.css'; // Importa los estilos CSS
 import Busqueda from '../components/Reserva'; // Asegúrate de que la ruta sea correcta
 import Mapa from '../components/HospedajeMapa'; // Asegúrate de que la ruta sea correcta
