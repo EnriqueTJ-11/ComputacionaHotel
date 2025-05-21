@@ -3,37 +3,59 @@
   padding: 20px;
 }
 
-.barra-buscar-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  gap: 10px;
-  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+.titulo-bienvenida-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Blanco con un poco de transparencia para un efecto suave */
+    border-radius: 15px; /* Bordes redondeados para un look moderno */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+    max-width: 1000px; /* Limita el ancho máximo para que no se extienda demasiado en pantallas grandes */
+    margin: 2rem auto; /* Centra el contenedor horizontalmente y le da espacio vertical */
+    display: flex; /* Para centrar el contenido (el título) dentro de él */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    text-align: center; /* Asegura que el texto dentro también se centre */
+    border: 2px solid #994500;
 }
 
-.barra-buscar {
-  padding: 10px;
-  border: 1px solid #704900;
-  border-radius: 10px;
-  font-size: 16px;
-  width: 50%; /* O ajusta el ancho según lo necesites */
-  max-width: 600px; /* Limita el ancho máximo si es necesario */
+/* Opcional: Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .titulo-bienvenida-container {
+        padding: 1rem 1rem;
+        margin: 2rem auto;
+        border-radius: 10px;
+    }
 }
 
-.boton-buscar {
-  padding: 10px 20px;
-  background-color: #b48400;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+@media (max-width: 480px) {
+    .titulo-bienvenida-container {
+        padding: 1rem 1.5rem;
+        margin: 1.5rem auto;
+        border-radius: 8px;
+    }
 }
 
-.boton-buscar:hover {
-  background-color: #9c8000;
-  transform: translateY(-2px);
+.titulo-bienvenida {
+    font-family: 'Playfair Display', serif; /* Una fuente elegante con serifa */
+    font-size: 2.5rem; /* Un tamaño de letra grande. Puedes ajustarlo. */
+    color: #333; /* Un color oscuro para que contraste. Puedes cambiarlo. */
+    text-align: center; /* Centra el texto */
+    margin-top: 2rem; /* Un poco de espacio arriba */
+    margin-bottom: 1.5rem; /* Un poco de espacio abajo */
+    font-weight: 700; /* Hace la letra más negrita para que resalte */
+    letter-spacing: 0.05em; /* Un pequeño espacio entre letras para un toque elegante */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sutil sombra para darle profundidad */
+}
+
+/* Opcional: Para pantallas más pequeñas, ajusta el tamaño de la fuente */
+@media (max-width: 768px) {
+    .titulo-bienvenida {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo-bienvenida {
+        font-size: 2rem;
+    }
 }
 
 .contenedor-hoteles {

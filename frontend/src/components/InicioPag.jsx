@@ -1,15 +1,14 @@
 // src/components/InicioPag.jsx
 import React from 'react';
 import '../styles/InicioPag.css'; // Importa los estilos CSS
-import Busqueda from '../components/Reserva'; // Importa tu componente de búsqueda
 
 // El componente ahora recibe 'hoteles' como prop
 function InicioPag({ hoteles }) {
   return (
     <div className="inicio-pag">
-
-      <Busqueda />
-
+      <div className="titulo-bienvenida-container">
+        <h1 className="titulo-bienvenida">¡Bienvenido A Tu Plataforma de Hospedaje!</h1>
+      </div>
       <div className="contenedor-hoteles">
         {hoteles.length > 0 ? (
           hoteles.map((hotel, index) => (
