@@ -71,7 +71,7 @@ const UserProfile = () => {
           <p><strong>Segundo Nombre:</strong> {user.nombre2_usuario}</p>
           <p><strong>Primer Apellido:</strong> {user.apellido1_usuario}</p>
           <p><strong>Segundo Apellido:</strong> {user.apellido2_usuario}</p>
-          <p><strong>Nacionalidad:</strong>{user.Nacionalidad}</p>
+          <p><strong>Nacionalidad:</strong>{user.Nacionalida}</p>
           <p><strong>Telefono:</strong>{user.Telefono}</p>
           <p><strong>Nacimiento:</strong>{user.Nacimiento}</p>
           {/* Si tienes más campos en la respuesta del backend, añádelos aquí:
