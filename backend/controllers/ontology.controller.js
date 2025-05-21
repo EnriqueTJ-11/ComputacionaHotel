@@ -238,8 +238,168 @@ async function getTiposAlojamiento(req, res) {
   }
 }
 
+const PREFIXES = `
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX : <http://www.semanticweb.org/ontologies/hotel#>
+`;
+
+async function buscarHospedajes(req, res) {
+    try {
+        const { destino, personas, habitaciones } = req.query; // Obtiene los parámetros del frontend
+
+        let sparqlQuery = `
+            ${PREFIXES}
+
+            SELECT ?alojamiento 
+                  (STR(?nombre) AS ?Nombre_)
+                  (STR(?capacidad) AS ?Capacidad_)
+                  (STR(?categoria) AS ?Categoria_)
+                  (STR(?descripcion) AS ?Descripcion_)
+                  (STR(?latitud) AS ?Latitud_)
+                  (STR(?longitud) AS ?Longitud_)
+				          (STR(?ciudad) AS ?Ciudad_)
+				          (STR(?capacidadhabi) AS ?CapacidadHabitacion_)
+				          (STR(?camas) AS ?MaximoCama_)
+            WHERE {
+              ?alojamiento a ?tipo .
+              VALUES ?tipo {
+                :Hotel :Hostal :Apartamento :CasaRural :BedAndBreakfast
+                :AlbergueJuvenil :Motel :Posada :Resort :HotelBoutique
+              }
+              
+              ?alojamiento :nombre ?nombre ;
+                          :capacidadTotal ?capacidad ;
+                          :descripcion ?descripcion;
+                          :ubicadoEn ?ubicacion ;
+                          :tieneHabitacion ?habitacion .
+                          
+              ?ubicacion :latitud ?latitud ; 
+                         :longitud ?longitud;
+              			     :ciudad ?ciudad .
+
+  			      ?habitacion :capacidadMaxima ?capacidadhabi ;
+  			 			  :numeroCamas ?camas .
+
+        `;
+
+        if (destino) {
+            // Filtrar por ubicación (que es un literal de texto en tu ontología)
+            // Usamos regex para búsqueda parcial y case-insensitive
+            sparqlQuery += ` FILTER regex(str(?ciudad), "${destino}", "i") .`;
+        }
+
+        if (personas) {
+            // Filtrar por capacidad total del hospedaje
+            sparqlQuery += ` FILTER (?capacidadhabi >= ${parseInt(personas, 10)}) .`;
+        }
+
+        if (habitaciones) {
+            // Esto es un poco más complejo porque habitaciones están relacionadas.
+            // Necesitamos contar las habitaciones o filtrarlas de alguna manera.
+            // Para una búsqueda simple por "número de habitaciones", podríamos asumir que
+            // buscas hospedajes que *tienen al menos* esa cantidad de habitaciones disponibles.
+            // Una forma más precisa sería sumar las habitaciones disponibles.
+            // Por simplicidad, aquí buscaremos si el hospedaje tiene habitaciones con esa cantidad de camas o más.
+            // Si necesitas el NÚMERO TOTAL de habitaciones, la consulta sería más compleja (subquery y GROUP BY).
+
+            // Opción simple: Hospedajes que tienen *alguna* habitación (o al menos una)
+            // con un número de camas o un atributo específico que indique "habitaciones".
+            // Tu ontología tiene 'hotel:tieneHabitacion' y 'hotel:numeroCamas' dentro de Habitacion.
+            // Si quieres filtrar por un número mínimo de habitaciones del _hospedaje_, la ontología
+            // debería tener una propiedad como `hotel:numeroTotalHabitaciones`.
+            // Si solo quieres filtrar por `numeroCamas` dentro de las habitaciones que _tiene_ el hospedaje,
+            // la lógica sería:
+            sparqlQuery += `
+                FILTER (?camas >= ${parseInt(habitaciones, 10)}) .
+            `;
+            // NOTA: Esto filtrará hospedajes que tengan AL MENOS UNA habitación con esa cantidad de camas.
+            // Si quieres contar el total de habitaciones o filtrar por la disponibilidad,
+            // la ontología y la consulta SPARQL necesitarían ser más sofisticadas.
+        }
+
+        sparqlQuery += `} ORDER BY ?nombre`; // Cierra el WHERE clause
+
+        console.log("Consulta SPARQL generada para búsqueda:", sparqlQuery);
+
+        const resultadosOntologia = await queryClient.query(sparqlQuery).execute();
+
+        // 2. Formatear los resultados para el frontend
+        const alojamientosFormateados = resultadosOntologia.results.bindings.map(item => {
+            const idAlojamiento = item.alojamiento ? item.alojamiento.value.split('#').pop() : null;
+
+            return {
+                id_alojamiento: idAlojamiento,
+                nombre: item.Nombre_ ? item.Nombre_.value : null,
+                capacidad: item.Capacidad_ ? parseInt(item.Capacidad_.value) : null,
+                categoria: item.Categoria_ ? item.Categoria_.value : null, // Ya es STR, no necesita pop
+                descripcion: item.Descripcion_ ? item.Descripcion_.value : null,
+                latitud: item.Latitud_ ? Number(item.Latitud_.value) : null,
+                longitud: item.Longitud_ ? Number(item.Longitud_.value) : null,
+                ciudad: item.Ciudad_ ? item.Ciudad_.value : null, // Nuevo campo para ciudad
+                capacidadHabitacion: item.CapacidadHabitacion_ ? parseInt(item.CapacidadHabitacion_.value) : null,
+                numeroCamas: item.MaximoCama_ ? parseInt(item.MaximoCama_.value) : null,
+            };
+        });
+
+        // 3. Responder con los datos formateados
+        // Asumiendo que tienes una función successResponse y errorResponse
+        return successResponse(res, alojamientosFormateados, 'Alojamientos de ontología obtenidos exitosamente');
+
+    } catch (error) {
+        console.error('Error al buscar hospedajes con ontología:', error);
+        return errorResponse(res, 'Error interno del servidor al buscar hospedajes con ontología.', error.message);
+    }
+}
+async function getCiudadesUnicas(req, res) { // <<-- YA NO NECESITA 'exports.' AQUÍ
+    try {
+        const consultaSPARQL = `
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX owl: <http://www.w3.org/2002/07/owl#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            PREFIX : <http://www.semanticweb.org/ontologies/hotel#>
+
+            SELECT DISTINCT (STR(?ciudad) AS ?Ciudad_)
+            WHERE {
+                ?ubicacion :ciudad ?ciudad .
+                             
+            }
+            ORDER BY ?ciudad
+        `;
+
+        // Si estás usando `queryClient.query(...).execute()`:
+        const resultadosOntologia = await queryClient.query(consultaSPARQL).execute(); // Usa queryClient aquí
+        const bindings = resultadosOntologia.results.bindings;
+
+        // Si usaras axios directamente, necesitarías la constante FUSEKI_URL aquí también
+        // const response = await axios.post(
+        //     FUSEKI_URL,
+        //     `query=${encodeURIComponent(consultaSPARQL)}`,
+        //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+        // );
+        // const bindings = response.data.results.bindings;
+
+        const ciudadesFormateadas = bindings.map(item => {
+            return item.Ciudad_ ? item.Ciudad_.value : null;
+        }).filter(ciudad => ciudad !== null);
+
+        // Usa successResponse que ya tienes importado
+        return successResponse(res, ciudadesFormateadas, 'Ciudades de ontología obtenidas exitosamente');
+
+    } catch (error) {
+        console.error('Error consultando ontología para ciudades (¡ATENCIÓN!):', error);
+        // Usa errorResponse que ya tienes importado
+        return errorResponse(res, 'Error interno del servidor al consultar las ciudades', error.message);
+    }
+}
+
+
 module.exports = {
   queryOntology,
   getTiposAlojamiento,
-  createAlojamiento
+  createAlojamiento,
+  buscarHospedajes,
+  getCiudadesUnicas
 };
