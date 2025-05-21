@@ -124,6 +124,7 @@ const RegisterHotel = () => {
     }
 
     return (
+        <div className="pag-fondo">
         <div className="register-card">
             <div className="register-hospedaje-container">
                 <h1 className="register-title">Registro de Establecimiento</h1>
@@ -228,6 +229,7 @@ const RegisterHotel = () => {
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     );
 };

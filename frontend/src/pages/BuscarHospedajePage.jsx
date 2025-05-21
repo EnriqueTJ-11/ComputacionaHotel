@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BuscarHospedajeComponent from '../components/BuscarHospedaje'; 
-import Reserva from '../components/Reserva';// Cambié el nombre para evitar confusión con la página
 import '../styles/InicioPag.css'; // Asegúrate de que los estilos sean adecuados para esta página también
 
 function BuscarHospedajePage() {

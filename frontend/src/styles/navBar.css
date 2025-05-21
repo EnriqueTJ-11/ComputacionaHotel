@@ -18,21 +18,7 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
-  background-image: linear-gradient(90deg, #f2f55a, #ffcc99, #f2f55a, #ffcc99, #f2f55a, #ffcc99); /* Colores opacos */
-  background-size: 400% 100%; /* Ancho grande para el movimiento horizontal */
-  animation: waveGradient 20s infinite linear;
-}
-
-@keyframes waveGradient {
-  0% {
-    background-position: 0% 50%; /* Inicio del movimiento */
-  }
-  50% {
-    background-position: 100% 50%; /* Punto medio del movimiento */
-  }
-  100% {
-    background-position: 0% 50%; /* Fin del movimiento (se repite) */
-  }
+  background: white;
 }
 
 .logo-link {
