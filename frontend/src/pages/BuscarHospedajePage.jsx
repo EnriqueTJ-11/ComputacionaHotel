@@ -1,4 +1,3 @@
-// src/pages/BuscarHospedajePage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BuscarHospedajeComponent from '../components/BuscarHospedaje'; 

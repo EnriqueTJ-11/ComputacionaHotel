@@ -272,6 +272,7 @@ async function buscarHospedajes(req, res) {
               ?alojamiento :nombre ?nombre ;
                           :capacidadTotal ?capacidad ;
                           :descripcion ?descripcion;
+                          :categoria ?categoria;
                           :ubicadoEn ?ubicacion ;
                           :tieneHabitacion ?habitacion .
                           
