@@ -1,9 +1,10 @@
 // pages/inicioSesion.jsx
-import React, { useState, useEffect, useContext  } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom'; // Importa useContext
 import LoginPage from '../components/LoginUsuario';
 import { AuthContext } from '../App'; // Importa el contexto de autenticación
+import '../styles/RegisterUsuario.css';
 
 const InicioSesion = () => {
   const [formData, setFormData] = useState({
@@ -65,11 +66,13 @@ const InicioSesion = () => {
 
   return (
     <div className="ingreso-page">
-      {successMessage && (
-        <div className="success-message">
-          {successMessage}
-        </div>
-      )}
+      <div className="register-page">
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
+      </div>
 
       <LoginPage
         onSubmit={handleSubmit}

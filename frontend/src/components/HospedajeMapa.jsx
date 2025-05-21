@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // ¡Importante! CSS de Leaflet
 import L from 'leaflet'; // Importa el objeto Leaflet
@@ -16,7 +15,7 @@ L.Icon.Default.mergeOptions({
 function HotelesMapa({ hoteles }) {
   // Establece una posición central inicial para el mapa.
   // Podría ser el centro de tu área de interés, por ejemplo, Florencia, Caquetá
-  const defaultCenter = [1.6148, -75.6062]; // Latitud y Longitud de Florencia, Caquetá
+  const defaultCenter = [40.418550, -3.69672]; // Latitud y Longitud de Florencia, Caquetá
 
   // Verifica que 'hoteles' sea un array antes de usarlo
   if (!hoteles || !Array.isArray(hoteles)) {
@@ -26,9 +25,9 @@ function HotelesMapa({ hoteles }) {
   return (
     <MapContainer
       center={defaultCenter}
-      zoom={13} // Nivel de zoom inicial (ajusta según necesites)
+      zoom={5.7} // Nivel de zoom inicial (ajusta según necesites)
       scrollWheelZoom={false} // Puedes cambiar a true si quieres zoom con la rueda del ratón
-      style={{ height: '600px', width: '100%' }} // Estilo para el tamaño del mapa
+      style={{ height: '100%', width: '100%' , zIndex: 100}} // Estilo para el tamaño del mapa
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -51,10 +50,10 @@ function HotelesMapa({ hoteles }) {
               <div>
                 <h3>{hotel.nombre_alojamiento}</h3>
                 <p>{hotel.descripcion}</p>
-                <p>Capacidad: {hotel.capacidad_total}</p>
+                <p>Capacidad: {hotel.capacidad}</p>
                 <p>Categoría: {hotel.categoria}</p>
-                {/* Agrega más información que quieras mostrar en el popup */}
-                {/* Puedes añadir un Link para ver más detalles */}
+                <p>Latitud: {hotel.latitud}</p>
+                <p>Longitud: {hotel.longitud}</p>
               </div>
             </Popup>
           </Marker>
