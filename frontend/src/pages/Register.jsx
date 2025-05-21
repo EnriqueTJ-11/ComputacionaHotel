@@ -12,7 +12,7 @@ function Register() {
 useEffect(() => {
     const fetchRoles = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/auth/roles-usuario-cliente');
+            const response = await axios.get('http://localhost:3001/api/auth/roles-usuario-cliente');
             console.log('Respuesta de roles:', response.data); // <-- ¡Sigue siendo útil para depurar!
             if (response.data.success) {
                 const rolesData = response.data.data; // Accede a la propiedad 'data'

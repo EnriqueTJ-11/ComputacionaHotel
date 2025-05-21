@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Servicio para Apache Jena Fuseki
+  fuseki:
+    image: stain/jena-fuseki
+    container_name: fuseki
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./fuseki-data:/hotel_data.ttl
+    restart: always
+
+  # Servicio para la Base de Datos MySQL
+  mysql:
+    image: mysql:8.0 # Usa una imagen oficial de MySQL
+    container_name: mysql_db # Un nombre amigable para el contenedor
+    ports:
+      - "3306:3306" # Mapea el puerto 3306 del host al 3306 del contenedor
+    environment:
+      MYSQL_ROOT_PASSWORD: 0107 # CAMBIA ESTO por una contraseña segura
+      MYSQL_DATABASE: hotel_app    # CAMBIA ESTO por el nombre de tu base de datos
+      MYSQL_USER: root            # CAMBIA ESTO por tu nombre de usuario de DB
+      MYSQL_PASSWORD: 0107    # CAMBIA ESTO por tu contraseña de usuario
+    volumes:
+      - mysql_data:/var/lib/mysql # Persistencia de datos para MySQL
+      # Puedes añadir un script de inicialización si lo necesitas, por ejemplo:
+      # - ./mysql-init:/docker-entrypoint-initdb.d # Si tienes scripts .sql para inicializar la DB
+    restart: always
+    healthcheck: # Opcional pero recomendado para asegurar que MySQL esté listo
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD"]
+      timeout: 20s
+      retries: 10
+      interval: 3s
+
+  # Servicio para el Backend (Node.js/Express)
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "3001:3000"
+    environment:
+      FUSEKI_URL: http://fuseki:3030/mydata
+      # Variables de entorno para MySQL
+      MYSQL_HOST: mysql # 'mysql' es el nombre del servicio de la DB
+      MYSQL_USER: root # Debe coincidir con MYSQL_USER en el servicio mysql
+      MYSQL_PASSWORD: 0107 # Debe coincidir con MYSQL_PASSWORD en el servicio mysql
+      MYSQL_DATABASE: hotel_app' # Debe coincidir con MYSQL_DATABASE en el servicio mysql
+      MYSQL_PORT: 3306
+    depends_on:
+      - fuseki
+      - mysql # El backend ahora depende de MySQL también
+    restart: always
+
+  # Servicio para el Frontend (React con Nginx)
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mysql_data: # Define el volumen para la persistencia de datos de MySQL

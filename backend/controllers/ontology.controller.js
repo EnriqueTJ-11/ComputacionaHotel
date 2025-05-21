@@ -29,8 +29,8 @@ async function queryOntology(req, res) {
                      :descripcion ?descripcion;
                      :ubicadoEn ?ubicacion . 
                      
-        ?ubicacion :latitud ?latitud ; 
-                   :longitud ?longitud .
+        OPTIONAL {?ubicacion :latitud ?latitud ; 
+                   :longitud ?longitud .} 
         OPTIONAL { ?alojamiento :categoria ?categoria . } 
       }
       ORDER BY ?nombre
@@ -126,11 +126,11 @@ async function createAlojamiento(req, res) {
     // Añadir propiedades opcionales del Alojamiento
     if (latitud !== null) {
       alojamientoTriples += ` ;
-                     :latitud "${latitud}"^^xsd:float`;
+                     :latitud "${latitud}"^^xsd:double`;
     }
     if (longitud !== null) {
       alojamientoTriples += ` ;
-                     :longitud "${longitud}"^^xsd:float`;
+                     :longitud "${longitud}"^^xsd:double`;
     }
     if (horarioApertura !== null) {
       alojamientoTriples += ` ;

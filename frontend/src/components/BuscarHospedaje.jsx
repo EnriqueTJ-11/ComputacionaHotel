@@ -22,25 +22,6 @@ function BuscarHospedaje() {
                 // Si no lo tienes, puedes adaptarlo para una consulta muy general o crear uno nuevo.
                 // Por ejemplo, un endpoint '/alojamientos' que no reciba parámetros de búsqueda.
                 const response = await axios.get(`${API_BASE_URL}/query`, {
-                    params: {
-                        sparqlQuery: `
-                            PREFIX : <http://www.semanticweb.org/ontologies/hotel#>
-                            SELECT ?id_alojamiento ?nombre ?descripcion ?capacidad ?categoria ?latitud ?longitud ?ciudad
-                            WHERE {
-                                ?alojamiento a :Alojamiento .
-                                OPTIONAL { ?alojamiento :id_alojamiento ?id_alojamiento . }
-                                OPTIONAL { ?alojamiento :nombre ?nombre . }
-                                OPTIONAL { ?alojamiento :descripcion ?descripcion . }
-                                OPTIONAL { ?alojamiento :capacidadTotal ?capacidad . }
-                                OPTIONAL { ?alojamiento :tieneTipoAlojamiento ?tipoAlojamiento .
-                                           ?tipoAlojamiento :categoria ?categoria . }
-                                OPTIONAL { ?alojamiento :ubicadoEn ?ciudadRecurso .
-                                           ?ciudadRecurso :nombreCiudad ?ciudad . }
-                                OPTIONAL { ?alojamiento :latitud ?latitud . }
-                                OPTIONAL { ?alojamiento :longitud ?longitud . }
-                            }
-                        `
-                    }
                 });
 
                 if (response.data && response.data.success) {

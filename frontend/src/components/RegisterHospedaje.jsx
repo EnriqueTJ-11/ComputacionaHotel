@@ -34,7 +34,7 @@ const RegisterHotel = () => {
                 setLoading(true);
                 setErrorMessage(null);
                 const response = await fetch(`${API_BASE_URL}/tiposAlojamiento`);
-                
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.message || 'Error al obtener tipos de alojamiento');
@@ -84,7 +84,7 @@ const RegisterHotel = () => {
         }
         // Asegurarse de que esAccesible sea boolean (true/false) o null si no se marca
         if (dataToSend.esAccesible === false) { // Si no está marcado y es false, envíalo
-             // Ya está manejado por type === 'checkbox' ? checked : value
+            // Ya está manejado por type === 'checkbox' ? checked : value
         }
 
 
@@ -125,111 +125,117 @@ const RegisterHotel = () => {
 
     return (
         <div className="pag-fondo">
-        <div className="register-card">
-            <div className="register-hospedaje-container">
-                <h1 className="register-title">Registro de Establecimiento</h1>
-                {successMessage && <div className="success-message">{successMessage}</div>}
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
-                <form onSubmit={handleSubmit} className="register-form">
-                    <div className="form-columns">
-                        <div className="form-column">
-                            {/* Campos existentes */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon building-icon">🏢</i>
-                                    <input type="text" id="nombre_alojamiento" name="nombre_alojamiento" value={formData.nombre_alojamiento} onChange={handleChange} placeholder="Nombre del establecimiento" required />
+            <div className="register-card">
+                <div className="register-hospedaje-container">
+                    <h1 className="register-title">Registro de Establecimiento</h1>
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                    {errorMessage && <div className="error-message">{errorMessage}</div>}
+                    <form onSubmit={handleSubmit} className="register-form">
+                        <div className="form-columns">
+                            <div className="form-column">
+                                {/* Campos existentes */}
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon building-icon">🏢</i>
+                                        <input type="text" id="nombre_alojamiento" name="nombre_alojamiento" value={formData.nombre_alojamiento} onChange={handleChange} placeholder="Nombre del establecimiento" required />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon email-icon">📧</i>
+                                        <input type="email" id="emailContacto" name="emailContacto" value={formData.emailContacto} onChange={handleChange} placeholder="Email de contacto" required />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon map-pin-icon">📍</i>
+                                        <input type="text" id="direccionEstablecimiento" name="direccionEstablecimiento" value={formData.direccionEstablecimiento} onChange={handleChange} placeholder="Dirección del establecimiento" required />
+                                    </div>
+                                </div>
+                                {/* Campos opcionales adicionales */}
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon map-marker-alt-icon">🌐</i> {/* Icono para latitud */}
+                                        <input type="number" step="any" id="latitud" name="latitud" value={formData.latitud} onChange={handleChange} placeholder="latitud" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon map-marker-alt-icon">🌐</i> {/* Icono para longitud */}
+                                        <input type="number" step="any" id="longitud" name="longitud" value={formData.longitud} onChange={handleChange} placeholder="longitud" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon file-text-icon">📄</i>
+                                        <textarea id="descripcionEstablecimiento" name="descripcionEstablecimiento" value={formData.descripcionEstablecimiento} onChange={handleChange} placeholder="Descripción del establecimiento" />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon email-icon">📧</i>
-                                    <input type="email" id="emailContacto" name="emailContacto" value={formData.emailContacto} onChange={handleChange} placeholder="Email de contacto" required />
+
+                            <div className="form-column">
+                                {/* Campos existentes */}
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon phone-icon">📞</i>
+                                        <input type="text" id="numero_establecimiento" name="numero_establecimiento" value={formData.numero_establecimiento} onChange={handleChange} placeholder="Numero Telefonico" required />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon users-icon">👥</i>
+                                        <input type="number" id="capacidad_total" name="capacidad_total" value={formData.capacidad_total} onChange={handleChange} placeholder="Capacidad Total" required />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon bed-icon">🛏️</i>
+                                        <input type="number" id="num_habitaciones" name="num_habitaciones" value={formData.num_habitaciones} onChange={handleChange} placeholder="Número de habitaciones" required />
+                                    </div>
+                                </div>
+                                <h4>Horario de Apertura</h4>
+                                {/* Campo de categoría (asegúrate de que el 'name' es 'categoria' en minúsculas) */}
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon clock-icon">⏰</i> {/* Icono para horario */}
+                                        <input type="time" id="horarioApertura" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} placeholder="Horario de Apertura" />
+                                    </div>
+                                </div>
+                                <h4>Horario de Cierre</h4>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon clock-icon">⏰</i>
+                                        <input type="time" id="horarioCierre" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} placeholder="Horario de Cierre" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon users-icon">👥</i>
+                                        <input type="number" id="categoria" name="categoria" value={formData.categoria} onChange={handleChange} placeholder="Categoria" required />
+                                    </div>
+                                </div>
+                                {/* Selector de Tipo de Establecimiento */}
+                                <div className="form-group">
+                                    <div className="input-icon-wrapper">
+                                        <i className="icon tag-icon">🏷️</i>
+                                        <select id="tipoEstablecimientoId" name="tipoEstablecimientoId" value={formData.tipoEstablecimientoId} onChange={handleChange} required>
+                                            <option value="">Seleccionar Tipo de Establecimiento</option>
+                                            {tiposAlojamiento.map(tipo => (
+                                                <option key={tipo.id} value={tipo.id}>
+                                                    {tipo.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon map-pin-icon">📍</i>
-                                    <input type="text" id="direccionEstablecimiento" name="direccionEstablecimiento" value={formData.direccionEstablecimiento} onChange={handleChange} placeholder="Dirección del establecimiento" required />
-                                </div>
-                            </div>
-                            {/* Campos opcionales adicionales */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon map-marker-alt-icon">🌐</i> {/* Icono para latitud */}
-                                    <input type="number" step="any" id="latitud" name="latitud" value={formData.latitud} onChange={handleChange} placeholder="Latitud" />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon map-marker-alt-icon">🌐</i> {/* Icono para longitud */}
-                                    <input type="number" step="any" id="longitud" name="longitud" value={formData.longitud} onChange={handleChange} placeholder="Longitud" />
-                                </div>
-                            </div>
-                        <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon file-text-icon">📄</i>
-                                    <textarea id="descripcionEstablecimiento" name="descripcionEstablecimiento" value={formData.descripcionEstablecimiento} onChange={handleChange} placeholder="Descripción del establecimiento" />
-                                </div>  
-                            </div>    
                         </div>
-                        
-                        <div className="form-column">
-                            {/* Campos existentes */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon phone-icon">📞</i>
-                                    <input type="text" id="numero_establecimiento" name="numero_establecimiento" value={formData.numero_establecimiento} onChange={handleChange} placeholder="Numero Telefonico" required />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon users-icon">👥</i>
-                                    <input type="number" id="capacidad_total" name="capacidad_total" value={formData.capacidad_total} onChange={handleChange} placeholder="Capacidad Total" required />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon bed-icon">🛏️</i>
-                                    <input type="number" id="num_habitaciones" name="num_habitaciones" value={formData.num_habitaciones} onChange={handleChange} placeholder="Número de habitaciones" required />
-                                </div>
-                            </div>
-                            <h4>Horario de Apertura</h4>
-                            {/* Campo de categoría (asegúrate de que el 'name' es 'categoria' en minúsculas) */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon clock-icon">⏰</i> {/* Icono para horario */}
-                                    <input type="time" id="horarioApertura" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} placeholder="Horario de Apertura" />
-                                </div>
-                            </div>
-                            <h4>Horario de Cierre</h4>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon clock-icon">⏰</i>
-                                    <input type="time" id="horarioCierre" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} placeholder="Horario de Cierre" />
-                                </div>
-                            </div>
-                            {/* Selector de Tipo de Establecimiento */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon tag-icon">🏷️</i>
-                                    <select id="tipoEstablecimientoId" name="tipoEstablecimientoId" value={formData.tipoEstablecimientoId} onChange={handleChange} required>
-                                        <option value="">Seleccionar Tipo de Establecimiento</option>
-                                        {tiposAlojamiento.map(tipo => (
-                                            <option key={tipo.id} value={tipo.id}>
-                                                {tipo.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
+                        <div className="form-actions">
+                            <button type="submit" className="register-button">REGISTRAR ESTABLECIMIENTO</button>
                         </div>
-                    </div>
-                    <div className="form-actions">
-                        <button type="submit" className="register-button">REGISTRAR ESTABLECIMIENTO</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
         </div>
     );
 };
