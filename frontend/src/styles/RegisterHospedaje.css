@@ -1,0 +1,197 @@
+  .register-card {
+    margin: 20px auto;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  h4 {
+  font-family: 'Arial', sans-serif; /* Puedes cambiar la fuente */
+  font-size: 1em; /* Tamaño de fuente, 1.2 veces el tamaño base */
+  color: #4b4639; /* Color de texto oscuro */
+  margin-top: 0px; /* Espacio superior */
+  margin-bottom: 0px; /* Espacio inferior */
+  font-weight: bold; /* Negrita */
+  line-height: 1.3; /* Altura de línea */
+}
+
+  .register-hospedaje-container {
+    padding: 30px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: linear-gradient(45deg, #f2f55ace, #ffcc99d0);
+    /* Tono beige muy claro */
+  }
+
+  .register-title {
+    font-size: 2.2rem;
+    color: #333;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .form-columns {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 20px;
+  }
+
+  .form-column {
+    flex: 1;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #e8dfc9;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .input-icon-wrapper:focus-within {
+    box-shadow: 0 0 0 2px #d4c9a8;
+  }
+
+  .textarea-wrapper {
+    align-items: flex-start;
+    height: 100%;
+  }
+
+  .textarea-wrapper .icon {
+    padding-top: 15px;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    padding-left: 15px;
+    color: #826f4a;
+  }
+
+  .register-form input[type="email"],
+  .register-form input[type="number"],
+  .register-form input[type="text"],
+  .register-form input[type="time"],
+  .register-form input[type="checkbox"],
+  .register-form input[type="tel"],
+  .register-form select,
+  .register-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background-color: #e8dfc9;
+    color: #4b4639;
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .register-form textarea {
+    resize: none;
+    height: 69px;
+  }
+
+  .register-form input::placeholder,
+  .register-form textarea::placeholder {
+    color: #a39779;
+  }
+
+  .register-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #4b4639 !important;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M0 0l6 6 6-6z" fill="%234b4639"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 30px;
+  }
+
+  /* Elimina la flecha en IE */
+  .register-form select::-ms-expand {
+    display: none;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .register-button {
+    width: 300px;
+    padding: 15px;
+    background-color: #836d3b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+  }
+
+  .register-button:hover {
+    background-color: #a8946a;
+    transform: translateY(-2px);
+  }
+
+  .login-link {
+    text-align: center;
+    color: #826f4a;
+    font-size: 0.9rem;
+  }
+
+  .login-link a {
+    color: #826f4a;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .login-link a:hover {
+    color: #a8946a;
+  }
+
+
+  .register-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-image: linear-gradient(45deg, #f2f55ace, #ffcc99d0);
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .form-columns {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .register-form-container {
+      padding: 25px;
+    }
+
+    .register-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+  }

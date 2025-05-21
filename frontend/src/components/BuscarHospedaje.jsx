@@ -2,11 +2,17 @@
 import React from 'react';
 import '../styles/InicioPag.css'; // Importa los estilos CSS
 import Busqueda from '../components/Reserva'; // Asegúrate de que la ruta sea correcta
+import Mapa from '../components/HospedajeMapa'; // Asegúrate de que la ruta sea correcta
+ // Asegúrate de que la ruta sea correcta
 
 // El componente ahora recibe 'hoteles' como prop
 function BuscarHospedaje({ hoteles }) {
     return (
         <div className="inicio-pag">
+            
+            <div className="mapa-container">
+                <Mapa hoteles={hoteles}/>
+            </div>
             <Busqueda />
             <div className="contenedor-hoteles">
                 {hoteles.length > 0 ? (
@@ -17,10 +23,6 @@ function BuscarHospedaje({ hoteles }) {
                             <p>{hotel.descripcion}</p>
                             <p>Capacidad: {hotel.capacidad}</p>
                             <p>Categoría: {hotel.categoria}</p>
-                            {/* Puedes añadir más información del hotel si la traes de la ontología */}
-                            {/* Por ejemplo: <p>Ubicación: {hotel.latitud}, {hotel.longitud}</p> */}
-                            {/* O un botón para ver más detalles */}
-                            {/* <button className="ver-detalles-btn">Ver Detalles</button> */}
                         </div>
                     ))
                 ) : (

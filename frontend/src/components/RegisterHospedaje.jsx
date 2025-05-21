@@ -125,7 +125,7 @@ const RegisterHotel = () => {
 
     return (
         <div className="register-card">
-            <div className="register-form-container">
+            <div className="register-hospedaje-container">
                 <h1 className="register-title">Registro de Establecimiento</h1>
                 {successMessage && <div className="success-message">{successMessage}</div>}
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -151,12 +151,6 @@ const RegisterHotel = () => {
                                     <input type="text" id="direccionEstablecimiento" name="direccionEstablecimiento" value={formData.direccionEstablecimiento} onChange={handleChange} placeholder="Dirección del establecimiento" required />
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon file-text-icon">📄</i>
-                                    <textarea id="descripcionEstablecimiento" name="descripcionEstablecimiento" value={formData.descripcionEstablecimiento} onChange={handleChange} placeholder="Descripción del establecimiento" />
-                                </div>
-                            </div>
                             {/* Campos opcionales adicionales */}
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
@@ -170,8 +164,14 @@ const RegisterHotel = () => {
                                     <input type="number" step="any" id="longitud" name="longitud" value={formData.longitud} onChange={handleChange} placeholder="Longitud" />
                                 </div>
                             </div>
+                        <div className="form-group">
+                                <div className="input-icon-wrapper">
+                                    <i className="icon file-text-icon">📄</i>
+                                    <textarea id="descripcionEstablecimiento" name="descripcionEstablecimiento" value={formData.descripcionEstablecimiento} onChange={handleChange} placeholder="Descripción del establecimiento" />
+                                </div>  
+                            </div>    
                         </div>
-
+                        
                         <div className="form-column">
                             {/* Campos existentes */}
                             <div className="form-group">
@@ -192,33 +192,19 @@ const RegisterHotel = () => {
                                     <input type="number" id="num_habitaciones" name="num_habitaciones" value={formData.num_habitaciones} onChange={handleChange} placeholder="Número de habitaciones" required />
                                 </div>
                             </div>
+                            <h4>Horario de Apertura</h4>
                             {/* Campo de categoría (asegúrate de que el 'name' es 'categoria' en minúsculas) */}
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon bookmark-icon">🔖</i>
-                                    <input type="text" id="categoria" name="categoria" value={formData.categoria} onChange={handleChange} placeholder="Categoría (ej: Urbano, Rural)" />
-                                </div>
-                            </div>
-                            {/* Campos opcionales adicionales */}
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
                                     <i className="icon clock-icon">⏰</i> {/* Icono para horario */}
                                     <input type="time" id="horarioApertura" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} placeholder="Horario de Apertura" />
                                 </div>
                             </div>
+                            <h4>Horario de Cierre</h4>
                             <div className="form-group">
                                 <div className="input-icon-wrapper">
                                     <i className="icon clock-icon">⏰</i>
                                     <input type="time" id="horarioCierre" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} placeholder="Horario de Cierre" />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="input-icon-wrapper">
-                                    <i className="icon wheelchair-icon">♿</i> {/* Icono para accesibilidad */}
-                                    <label htmlFor="esAccesible" className="checkbox-label">
-                                        <input type="checkbox" id="esAccesible" name="esAccesible" checked={formData.esAccesible} onChange={handleChange} />
-                                        Es accesible para personas con discapacidad
-                                    </label>
                                 </div>
                             </div>
                             {/* Selector de Tipo de Establecimiento */}

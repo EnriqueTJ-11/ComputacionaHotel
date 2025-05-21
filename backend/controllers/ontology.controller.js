@@ -15,6 +15,8 @@ async function queryOntology(req, res) {
              (STR(?capacidad) AS ?Capacidad_)
              (STR(?categoria) AS ?Categoria_)
              (STR(?descripcion) AS ?Descripcion_)
+             (STR(?latitud) AS ?Latitud_)
+             (STR(?longitud) AS ?Longitud_)
       WHERE {
         ?alojamiento a ?tipo .
         VALUES ?tipo {
@@ -24,7 +26,11 @@ async function queryOntology(req, res) {
         
         ?alojamiento :nombre ?nombre ;
                      :capacidadTotal ?capacidad ;
-                     :descripcion ?descripcion.
+                     :descripcion ?descripcion;
+                     :ubicadoEn ?ubicacion . 
+                     
+        ?ubicacion :latitud ?latitud ; 
+                   :longitud ?longitud .
         OPTIONAL { ?alojamiento :categoria ?categoria . } 
       }
       ORDER BY ?nombre
@@ -43,10 +49,13 @@ async function queryOntology(req, res) {
         nombre: item.Nombre_ ? item.Nombre_.value : null, // Acceso seguro
         capacidad: item.Capacidad_ ? parseInt(item.Capacidad_.value) : null, // Acceso seguro y parseo
         
-        // **Este es el punto clave:** acceso seguro a 'Categoria_'
+        // *Este es el punto clave:* acceso seguro a 'Categoria_'
         categoria: item.Categoria_ ? item.Categoria_.value.split('#').pop() : null,
         
-        descripcion: item.Descripcion_ ? item.Descripcion_.value : null // Acceso seguro
+        descripcion: item.Descripcion_ ? item.Descripcion_.value : null,// Acceso seguro
+        latitud: item.Latitud_ ? Number(item.Latitud_.value) : null, // Acceso seguro - usando Number para double
+        longitud: item.Longitud_ ? Number(item.Longitud_.value) : null // Acceso seguro - usando Number para double
+
       };
     });
 
@@ -55,10 +64,10 @@ async function queryOntology(req, res) {
 
   } catch (error) {
     console.error('Error consultando ontología (¡ATENCIÓN!):', error); 
-    // Asegúrate de que este `console.error` te muestre el detalle del error en tu servidor.
+    // Asegúrate de que este console.error te muestre el detalle del error en tu servidor.
     // Para producción, podrías simplificar el error para el cliente
     return errorResponse(res, 'Error interno del servidor al consultar la ontología', error.message);
-  }
+  }
 }
 
 async function createAlojamiento(req, res) {
@@ -80,7 +89,7 @@ async function createAlojamiento(req, res) {
       longitud = null,
       horarioApertura = null,
       horarioCierre = null,
-      esAccesible = null, 
+      esAccesible = null,
       categoria = null
     } = req.body;
 
@@ -88,11 +97,11 @@ async function createAlojamiento(req, res) {
     if (!tipoEstablecimientoId || !nombre_alojamiento || !capacidad_total || !num_habitaciones || !descripcionEstablecimiento) {
       return errorResponse(res, 'Faltan campos obligatorios para el alojamiento.', 400); // Ajuste aquí
     }
-    
+
     if (isNaN(parseInt(capacidad_total)) || parseInt(capacidad_total) <= 0) {
       return errorResponse(res, 'La capacidad total debe ser un número entero positivo.', 400); // Ajuste aquí
     }
-    
+
     if (isNaN(parseInt(num_habitaciones)) || parseInt(num_habitaciones) <= 0) {
       return errorResponse(res, 'El número de habitaciones debe ser un número entero positivo.', 400); // Ajuste aquí
     }
@@ -158,7 +167,7 @@ async function createAlojamiento(req, res) {
                      :capacidad "${capacidadHabitacionDefault}"^^xsd:integer ;
                      :tieneCostoPorNoche "${costoNocheDefault}"^^xsd:float ;
                      :esFumador "${esFumadorDefault}"^^xsd:boolean .`; // <--- ¡Punto final para la Habitacion!
-        
+
         insertTriples.push(habitacionDeclaration);
 
         // Relación entre Alojamiento y Habitacion
@@ -177,7 +186,7 @@ PREFIX : <http://www.semanticweb.org/ontologies/hotel#>
 INSERT DATA {
   ${insertTriples.join('\n')}
 }`;
-    
+
     console.log("Consulta INSERT SPARQL a ejecutar:\n", finalInsertQuery);
 
     // Ejecutar la consulta INSERT
@@ -187,10 +196,10 @@ INSERT DATA {
 
   } catch (error) {
     console.error('Error al insertar alojamiento en la ontología:', error);
-    
+
     const statusCode = error.httpStatus || 500;
     const errorMsg = error.message || 'Error desconocido';
-    
+
     // Esta llamada ya está correcta según tu última definición de errorResponse
     return errorResponse(res, `Error al insertar alojamiento en la ontología: ${errorMsg}`, statusCode, error);
   }
