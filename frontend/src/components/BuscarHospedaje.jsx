@@ -17,6 +17,7 @@ function BuscarHospedaje({ hoteles }) {
                             <p>{hotel.descripcion}</p>
                             <p>Capacidad: {hotel.capacidad}</p>
                             <p>Categoría: {hotel.categoria}</p>
+                            <p>Latitud: {hotel.latitud}</p>
                             {/* Puedes añadir más información del hotel si la traes de la ontología */}
                             {/* Por ejemplo: <p>Ubicación: {hotel.latitud}, {hotel.longitud}</p> */}
                             {/* O un botón para ver más detalles */}
