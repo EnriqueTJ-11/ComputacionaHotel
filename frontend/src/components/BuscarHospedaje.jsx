@@ -1,14 +1,16 @@
 // src/components/BuscarHospedaje.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/InicioPag.css'; 
-import Mapa from './HospedajeMapa'; // Asegúrate de que la ruta sea correcta
+import '../styles/InicioPag.css';
+import Mapa from '../components/HospedajeMapa'; // Asegúrate de que la ruta sea correcta
 import Reserva from '../components/Reserva'; // Renombrado a Reserva para claridad
+import imagen from '../assets/hotel.jpg'; // Asegúrate de que la ruta sea correcta
+
 
 // Define la URL base de tu backend (si la necesitas para obtener todos los hoteles)
 const API_BASE_URL = 'http://localhost:3000/api/ontologia'; // Asegúrate de que esta URL sea correcta
 
-function BuscarHospedaje() { 
+function BuscarHospedaje() {
     const [allHoteles, setAllHoteles] = useState([]); // Para almacenar todos los hoteles
     const [hospedajesMostrados, setHospedajesMostrados] = useState([]); // Hoteles que se mostrarán
     const [busquedaRealizada, setBusquedaRealizada] = useState(false); // Indica si se hizo una búsqueda
@@ -76,16 +78,14 @@ function BuscarHospedaje() {
     return (
         <div className="inicio-pag">
             <div className="mapa-container">
-                {/* Pasa los hoteles que se están mostrando actualmente al mapa */}
-                <Mapa hoteles={hospedajesMostrados}/> 
+                <Mapa hoteles={hospedajesMostrados} />
             </div>
-            
-            {/* Pasa las funciones de callback a Reserva */}
-            <Reserva 
-                onSearchResults={handleSearchResults} 
-                onSearchPerformed={handleSearchPerformed} 
+
+            <Reserva
+                onSearchResults={handleSearchResults}
+                onSearchPerformed={handleSearchPerformed}
             />
-            
+
             <h3>{getResultsTitle()}</h3>
             <div className="contenedor-hoteles">
                 {isLoadingAllHoteles ? (
@@ -94,16 +94,32 @@ function BuscarHospedaje() {
                     hospedajesMostrados.length > 0 ? (
                         hospedajesMostrados.map((hotel) => (
                             <div key={hotel.id_alojamiento} className="hotel-container"> {/* Asegúrate de que id_alojamiento sea único */}
-                                <h3>{hotel.nombre}</h3>
-                                <p>Descripción: {hotel.descripcion}</p>
-                                <p>Capacidad Total: {hotel.capacidad} personas</p>
-                                <p>Categoría: {hotel.categoria}</p>
+                                <div className="hotel-image-container">
+                                    {/* Aquí utilizamos la imagen del hotel o una imagen por defecto */}
+                                    <img
+                                        src={imagen}
+                                        alt={"Imagen del hotel"}
+                                        className="hotel-image"
+                                    />
+                                </div>
+                                <div className="hotel-info">
+                                    <h3 className="hotel-name">{hotel.nombre}</h3>
+                                    <p className="hotel-description">{hotel.descripcion}</p>
+                                    <div className="hotel-details">
+                                        <span className="hotel-capacity">
+                                            <i className="capacity-icon">👥</i> {hotel.capacidad} huéspedes
+                                        </span>
+                                        <span className="hotel-category">
+                                            <i className="category-icon">⭐</i> {hotel.categoria}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         ))
                     ) : (
                         <div className="no-hoteles-message">
-                            {busquedaRealizada 
-                                ? "No se encontraron hoteles con los criterios especificados." 
+                            {busquedaRealizada
+                                ? "No se encontraron hoteles con los criterios especificados."
                                 : "No hay hospedajes disponibles en este momento."}
                         </div>
                     )
