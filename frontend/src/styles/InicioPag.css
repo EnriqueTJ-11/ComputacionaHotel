@@ -1,7 +1,6 @@
 .inicio-pag {
-  background-image: linear-gradient(45deg, #f2f55abe, #ffcc99);
-  padding: 20px;
-  
+ background-image: linear-gradient(90deg, #f2f55a, #ffcc99);  
+ padding: 20px;
 }
 
 .titulo-bienvenida-container {
@@ -60,45 +59,135 @@
 }
 
 .contenedor-hoteles {
-  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 columnas responsivas */
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .hotel-container {
-  border: 1px solid #994500;
-  border-radius: 15px;
-  background-color: white;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  height: 100%;
+  max-height: 400px; /* Establecemos una altura máxima */
 }
 
 .hotel-container:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-.hotel-container h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #333;
+.hotel-image-container {
+  position: relative;
+  width: 100%;
+  height: 180px; /* Altura fija para todas las imágenes */
+  overflow: hidden; /* Importante: esto evita que la imagen se desborde */
 }
 
-.hotel-container p {
-  color: #666;
-  font-size: 14px;
+.hotel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Importante: esto hace que la imagen cubra el área sin deformarse */
+  transition: transform 0.5s ease;
 }
 
-.mapa-container {
-  height: 70vh; 
-  width: 70%;
-  background-color: #ffffff; /* Añade un color de fondo para ver el área ocupada */
-  border: 2px solid #994500;
-  padding: 30px;
+.hotel-container:hover .hotel-image {
+  transform: scale(1.05);
+}
+
+.hotel-info {
+  padding: 16px;
   display: flex;
-  justify-content: center;
-  border-radius: 15px;
-  margin: auto;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden; /* Evita que el texto se desborde */
 }
 
+.hotel-name {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hotel-description {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.hotel-details {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #ecf0f1;
+  margin-top: auto; /* Empuja los detalles hacia abajo */
+}
+
+.hotel-capacity, .hotel-category {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #34495e;
+}
+
+.capacity-icon, .category-icon {
+  margin-right: 5px;
+  font-style: normal;
+}
+
+.no-hoteles-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 0;
+  color: #7f8c8d;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.empty-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+  font-style: normal;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .contenedor-hoteles {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .hotel-image-container {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor-hoteles {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .hotel-container {
+    max-height: none;
+  }
+}
