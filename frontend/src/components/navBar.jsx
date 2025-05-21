@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import '../styles/navBar.css';
@@ -8,11 +7,17 @@ function NavbarAuth({ handleLogout }) {
 
   // Lista de enlaces para la navegación
   const navItems = [
-    { path: '/hospedaje', label: 'Buscar Hospedaje', icon: '🛏️' },
+    { path: '/buscarHospedaje', label: 'Buscar Hospedaje', icon: '🛏️' },
     { path: '/perfil', label: 'Mi Perfil', icon: '👤' },
     { path: '/registerHospedaje', label: 'Registrar Hospedaje', icon: '+' },
-    { path: '/', label: 'Cerrar Sesión', icon: '🔗', onClick: handleLogout } // Usamos onClick directamente
+    { path: '/', label: 'Cerrar Sesión', icon: '🔗', isLogout: true } 
   ];
+
+  // Función para manejar el clic en el enlace de Cerrar Sesión
+  const handleLogoutClick = (e) => {
+    e.preventDefault(); // Previene la navegación predeterminada del Link
+    handleLogout();     // Llama a la función de cerrar sesión
+  };
 
   return (
     <motion.nav
@@ -31,14 +36,14 @@ function NavbarAuth({ handleLogout }) {
         {navItems.map((item) => (
           <li
             key={item.path}
-            className={location.pathname === item.path ? 'active' : ''}
+            className={location.pathname === item.path ? 'blinking-login' : ''}
           >
-            {item.onClick ? ( // Si el item tiene un onClick, usa un botón
-              <button onClick={item.onClick} className="nav-link-button">
+            {item.isLogout ? ( // Si es el enlace de cerrar sesión
+              <Link to={item.path} onClick={handleLogoutClick}> {/* Le pasamos el onClick */}
                 <span className="nav-icon">{item.icon}</span>
                 <span className="nav-text">{item.label}</span>
-              </button>
-            ) : ( // Si no tiene onClick, usa un Link
+              </Link>
+            ) : ( // Si es un enlace normal
               <Link to={item.path}>
                 <span className="nav-icon">{item.icon}</span>
                 <span className="nav-text">{item.label}</span>

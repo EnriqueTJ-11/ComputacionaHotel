@@ -1,11 +1,14 @@
 // App.jsx
 import InicioSesion from './pages/inicioSesion';
-import NavbarNoAuth from './components/NavbarNoAuth';
-import NavbarAuth from './components/navBar';
 import Inicio from './pages/inicio';
 import Register from './pages/Register';
 import TraerHoteles from './pages/TraerHoteles';
+import BuscarHospedajePage from './pages/BuscarHospedajePage';
+
+import NavbarNoAuth from './components/NavbarNoAuth';
+import NavbarAuth from './components/navBar';
 import RegisterHospedaje from './components/RegisterHospedaje';
+
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState, createContext } from 'react';
@@ -126,6 +129,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/buscar" element={<TraerHoteles />} />
           <Route path="/registerHospedaje" element={<RegisterHospedaje />} />
+          <Route path="/buscarHospedaje" element={<BuscarHospedajePage />} />
         </Routes>
       </div>
     </AuthContext.Provider>
