@@ -16,6 +16,8 @@ async function getEnrichedHotels(req, res) {
              (STR(?capacidad) AS ?Capacidad_)
              (STR(?categoria) AS ?Categoria_)
              (STR(?descripcion) AS ?Descripcion_)
+             (STR(?latitud) AS ?Latitud_)
+             (STR(?longitud) AS ?Longitud_)
       WHERE {
         ?alojamiento a ?tipo .
         VALUES ?tipo {
@@ -27,6 +29,12 @@ async function getEnrichedHotels(req, res) {
                      :capacidadTotal ?capacidad ;
                      :categoria ?categoria;
                      :descripcion ?descripcion.
+
+        ?alojamiento :ubicado en ?ubicación . 
+        ?ubicacion a :Ubicacion . 
+
+        ?ubicación :latitud ?latitud ; 
+                   :longitud ?longitud .
       }
     `;
 

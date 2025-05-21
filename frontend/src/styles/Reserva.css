@@ -153,7 +153,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 16px;
-  z-index: 1000; /* Z-index elevado para asegurar que esté por encima de todo */
+  z-index: 2000; /* Z-index elevado para asegurar que esté por encima de todo */
   margin-top: 10px;
 }
 
@@ -300,6 +300,7 @@
     width: calc(100vw - 40px);
     left: -10px;
     right: -10px;
+    z-index: 2000;
   }
   
   .date-picker-inputs {
