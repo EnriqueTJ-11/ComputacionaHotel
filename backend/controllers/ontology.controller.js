@@ -15,6 +15,8 @@ async function queryOntology(req, res) {
              (STR(?capacidad) AS ?Capacidad_)
              (STR(?categoria) AS ?Categoria_)
              (STR(?descripcion) AS ?Descripcion_)
+             (STR(?latitud) AS ?Latitud_)
+             (STR(?longitud) AS ?Longitud_)
       WHERE {
         ?alojamiento a ?tipo .
         VALUES ?tipo {
@@ -24,7 +26,11 @@ async function queryOntology(req, res) {
         
         ?alojamiento :nombre ?nombre ;
                      :capacidadTotal ?capacidad ;
-                     :descripcion ?descripcion.
+                     :descripcion ?descripcion;
+                     :ubicadoEn ?ubicacion . 
+                     
+        ?ubicacion :latitud ?latitud ; 
+                   :longitud ?longitud .
         OPTIONAL { ?alojamiento :categoria ?categoria . } 
       }
       ORDER BY ?nombre
@@ -46,7 +52,10 @@ async function queryOntology(req, res) {
         // **Este es el punto clave:** acceso seguro a 'Categoria_'
         categoria: item.Categoria_ ? item.Categoria_.value.split('#').pop() : null,
         
-        descripcion: item.Descripcion_ ? item.Descripcion_.value : null // Acceso seguro
+        descripcion: item.Descripcion_ ? item.Descripcion_.value : null,// Acceso seguro
+        latitud: item.Latitud_ ? Number(item.Latitud_.value) : null, // Acceso seguro - usando Number para double
+        longitud: item.Longitud_ ? Number(item.Longitud_.value) : null // Acceso seguro - usando Number para double
+
       };
     });
 

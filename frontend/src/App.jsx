@@ -4,6 +4,7 @@ import Inicio from './pages/inicio';
 import Register from './pages/Register';
 import TraerHoteles from './pages/TraerHoteles';
 import BuscarHospedajePage from './pages/BuscarHospedajePage';
+import UserProfile from './pages/UserProfile';
 
 import NavbarNoAuth from './components/NavbarNoAuth';
 import NavbarAuth from './components/navBar';
@@ -130,6 +131,8 @@ function App() {
           <Route path="/buscar" element={<TraerHoteles />} />
           <Route path="/registerHospedaje" element={<RegisterHospedaje />} />
           <Route path="/buscarHospedaje" element={<BuscarHospedajePage />} />
+          <Route path="/perfil" element={<UserProfile />} />
+          {/* Puedes añadir más rutas aquí */}
         </Routes>
       </div>
     </AuthContext.Provider>
