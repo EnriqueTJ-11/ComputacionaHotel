@@ -193,10 +193,6 @@ function Reserva({ onSearchResults, onSearchPerformed }) { // Acepta nuevas prop
 
     return (
         <div className="search-page-container">
-            {/* Sección del banner con el formulario de búsqueda */}
-            <div className="banner-section">
-                <img src="/src/assets/playa.jpg" alt="Fondo de playa" className="banner-image" />
-                <div className="banner-overlay">
                     <h1 className="search-title">¿A dónde quieres ir?</h1>
                     <div className="search-bar-wrapper">
                         <form className="search-bar" onSubmit={handleSearch}>
@@ -338,9 +334,7 @@ function Reserva({ onSearchResults, onSearchPerformed }) { // Acepta nuevas prop
                         </form>
                     </div>
                 </div>
-            </div>
-            {/* Los resultados de búsqueda ahora se renderizan en BuscarHospedaje.jsx */}
-        </div>
+
     );
 }
 

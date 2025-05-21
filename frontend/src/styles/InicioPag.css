@@ -58,6 +58,20 @@
     }
 }
 
+.mapa-container {
+  height: 60vh; /* La altura que quieres que ocupe el contenedor completo del mapa */
+  width: 80%;
+  background-color: #ffffff;
+  border: 2px solid #994500;
+  padding: 20px; /* Esto da un espacio interno al contenedor padre */
+  display: flex; /* Para centrar el mapa dentro de este contenedor */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  border-radius: 15px;
+  margin: auto;
+  overflow: hidden; /* Importante para que el mapa no se salga si es más grande */
+}
+
 .contenedor-hoteles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
