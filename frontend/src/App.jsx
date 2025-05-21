@@ -67,7 +67,7 @@ function App() {
         console.log('No autenticado');
 
         // Rutas protegidas que requieren autenticación
-        const protectedRoutes = ['/inicio', '/buscar', '/perfil', '/registerHotel'];
+        const protectedRoutes = ['/inicio', '/buscar', '/perfil', '/registerHotel', '/buscarHospedaje'];
 
         if (protectedRoutes.includes(location.pathname)) {
           console.log('Intentando acceder a ruta protegida, redirigiendo a login');

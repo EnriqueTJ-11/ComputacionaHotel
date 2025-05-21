@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(45deg, #f2f55ace, #ffcc99d0);
+  background-image: linear-gradient(45deg, #f2f55a, #ffcc99);
 }
 
 .login-card {
