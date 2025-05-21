@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // ¡Importante! CSS de Leaflet
 import L from 'leaflet'; // Importa el objeto Leaflet
+
 
 // Importa las imágenes de los marcadores de Leaflet (para que se vean bien)
 // Esto soluciona el problema de los marcadores rotos en Webpack/React

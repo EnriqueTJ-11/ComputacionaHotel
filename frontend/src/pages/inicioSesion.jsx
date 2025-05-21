@@ -15,9 +15,8 @@ const InicioSesion = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { setIsAuthenticated } = useContext(AuthContext); // Usa el contexto para actualizar el estado global
+  const { setIsAuthenticated } = useContext(AuthContext);
 
-  // Verificar si viene de un cierre de sesión exitoso
   useEffect(() => {
     if (location.state?.logoutSuccess) {
       setSuccessMessage('Sesión cerrada correctamente');
@@ -25,7 +24,6 @@ const InicioSesion = () => {
     }
   }, [location.state]);
 
-  // Verificar si ya hay un token activo
   useEffect(() => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
@@ -47,14 +45,15 @@ const InicioSesion = () => {
       const response = await axios.post('http://localhost:3000/api/auth/login', formData);
       console.log('Inicio de sesión exitoso', response.data);
 
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('usuarioId', response.data.usuarioId);
+      // ¡¡¡CAMBIO CLAVE AQUÍ!!! Accede a response.data.data.token
+      localStorage.setItem('token', response.data.data.token);
+      localStorage.setItem('usuarioId', response.data.data.usuarioId);
+      // localStorage.setItem('userEmail', response.data.data.email); // Opcional, si lo necesitas
+      // localStorage.setItem('userRol', response.data.data.rol);     // Opcional, si lo necesitas
 
-      console.log('Token guardado:', localStorage.getItem('token'));
+      console.log('Token guardado (desde login):', localStorage.getItem('token')); // Ahora debería mostrar el token real
 
-      // Actualizar el estado de autenticación a través del contexto
       setIsAuthenticated(true);
-
       console.log('Navegando a /inicio');
       navigate('/inicio');
     } catch (error) {
